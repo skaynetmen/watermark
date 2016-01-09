@@ -1,5 +1,5 @@
-//var slider = require('./modules/slider.js');
-//
-//$(document).ready(function () {
-//    slider.init();
-//});
+var watermark = require('./modules/watermark.js');
+
+$(document).ready(function(){
+  watermark.init();
+});
