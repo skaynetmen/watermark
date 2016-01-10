@@ -82,145 +82,174 @@ var grid = function(value){
       watermarkWidth = $("#workspaceWt").outerWidth(true);
 
       // Для позиционирование в центре каждой ячейки сетки
-      // gridPaddingHeight = ((imgHeight/3 - watermarkHeight)/2) + imgMarginTop,
-      // gridPaddingWidth = ((imgWidth/3 - watermarkWidth)/2) + imgMarginLeft;
+  var gridPaddingHeight = ((imgHeight/3 - watermarkHeight)/2) + imgMarginTop,
+      gridPaddingWidth = ((imgWidth/3 - watermarkWidth)/2) + imgMarginLeft;
 
-  $(".grid__link").on('click', function(e) {
-    e.preventDefault();
+    $( "#checkCenter" ).change(function() {
+      if ($('#checkCenter').prop('checked')) {
 
-    var $that = $(this),
-        gridNumber = parseInt($that.data('value')),
-        x = 0,
-        y = 0;
+        // Позиционирование в центре каждой ячейки сетки
+        $(".grid__link").on('click', function(e) {
+          e.preventDefault();
 
-    switch(gridNumber) {
-      case 1:
-        var x = imgMarginLeft,
-            y = imgMarginTop;
-        break;
+          var $that = $(this),
+              gridNumber = parseInt($that.data('value')),
+              x = 0,
+              y = 0;
 
-      case 2:
-        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
-            y = imgMarginTop;
-        break;
+          switch(gridNumber) {
+            case 1:
+              var x = gridPaddingWidth,
+                  y = gridPaddingHeight;
+              break;
 
-      case 3:
-        var x = imgWidth - watermarkWidth + imgMarginLeft,
-            y = imgMarginTop;
+            case 2:
+              var x = imgWidth/3 + gridPaddingWidth,
+                  y = gridPaddingHeight;
+              break;
 
-        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-        break;
+            case 3:
+              var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+                  y = gridPaddingHeight;
 
-      case 4:
-        var x = imgMarginLeft,
-            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
-        break;
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              break;
 
-      case 5:
-        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
-            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
-        break;
+            case 4:
+              var x = gridPaddingWidth,
+                  y = imgHeight/3 + gridPaddingHeight;
+              break;
 
-      case 6:
-        var x = imgWidth - watermarkWidth + imgMarginLeft,
-            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+            case 5:
+              var x = imgWidth/3 + gridPaddingWidth,
+                  y = imgHeight/3 + gridPaddingHeight;
+              break;
 
-        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-        break;
+            case 6:
+              var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+                  y = imgHeight/3 + gridPaddingHeight;
 
-      case 7:
-        var x = imgMarginLeft,
-            y = imgHeight - watermarkHeight + imgMarginTop;
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              break;
 
-        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-        break;
+            case 7:
+              var x = gridPaddingWidth,
+                  y = (imgHeight - imgHeight/3) + gridPaddingHeight;
 
-      case 8:
-        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
-            y = imgHeight - watermarkHeight + imgMarginTop;
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
 
-        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-        break;
+            case 8:
+              var x = imgWidth/3 + gridPaddingWidth,
+                  y = (imgHeight - imgHeight/3) + gridPaddingHeight;
 
-      case 9:
-        var x = imgWidth - watermarkWidth + imgMarginLeft,
-            y = imgHeight - watermarkHeight + imgMarginTop;
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
 
-        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-        break;
-    }
+            case 9:
+              var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+                  y = (imgHeight - imgHeight/3) + gridPaddingHeight;
 
-    // Позиционирование в центре каждой ячейки сетки
-    // switch(gridNumber) {
-    //   case 1:
-    //     var x = gridPaddingWidth,
-    //         y = gridPaddingHeight;
-    //     break;
-    //
-    //   case 2:
-    //     var x = imgWidth/3 + gridPaddingWidth,
-    //         y = gridPaddingHeight;
-    //     break;
-    //
-    //   case 3:
-    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
-    //         y = gridPaddingHeight;
-    //
-    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-    //     break;
-    //
-    //   case 4:
-    //     var x = gridPaddingWidth,
-    //         y = imgHeight/3 + gridPaddingHeight;
-    //     break;
-    //
-    //   case 5:
-    //     var x = imgWidth/3 + gridPaddingWidth,
-    //         y = imgHeight/3 + gridPaddingHeight;
-    //     break;
-    //
-    //   case 6:
-    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
-    //         y = imgHeight/3 + gridPaddingHeight;
-    //
-    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-    //     break;
-    //
-    //   case 7:
-    //     var x = gridPaddingWidth,
-    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-    //
-    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-    //     break;
-    //
-    //   case 8:
-    //     var x = imgWidth/3 + gridPaddingWidth,
-    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-    //
-    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-    //     break;
-    //
-    //   case 9:
-    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
-    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-    //
-    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
-    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
-    //     break;
-    // }
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
+          }
 
-    if (x < imgMarginLeft) x = imgMarginLeft;
-    if (y < imgMarginTop) y = imgMarginTop;
+          if (x < imgMarginLeft) x = imgMarginLeft;
+          if (y < imgMarginTop) y = imgMarginTop;
 
-    $workspaceWt
-      .css({top: y, left: x})
-      .attr( 'data-y', y )
-      .attr( 'data-x', x );
+          $workspaceWt
+            .css({top: y, left: x})
+            .attr( 'data-y', y )
+            .attr( 'data-x', x );
 
-    $spinnerX.spinner( "value", (x - imgMarginLeft) );
-    $spinnerY.spinner( "value", (y - imgMarginTop) );
-  });
+          $spinnerX.spinner( "value", (x - imgMarginLeft) );
+          $spinnerY.spinner( "value", (y - imgMarginTop) );
+        });
+
+      } else {
+
+        // Позиционирование в ячейках по краям фонового изображения
+        $(".grid__link").on('click', function(e) {
+          e.preventDefault();
+
+          var $that = $(this),
+              gridNumber = parseInt($that.data('value')),
+              x = 0,
+              y = 0;
+
+          switch(gridNumber) {
+            case 1:
+              var x = imgMarginLeft,
+                  y = imgMarginTop;
+              break;
+
+            case 2:
+              var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+                  y = imgMarginTop;
+              break;
+
+            case 3:
+              var x = imgWidth - watermarkWidth + imgMarginLeft,
+                  y = imgMarginTop;
+
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              break;
+
+            case 4:
+              var x = imgMarginLeft,
+                  y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+              break;
+
+            case 5:
+              var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+                  y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+              break;
+
+            case 6:
+              var x = imgWidth - watermarkWidth + imgMarginLeft,
+                  y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              break;
+
+            case 7:
+              var x = imgMarginLeft,
+                  y = imgHeight - watermarkHeight + imgMarginTop;
+
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
+
+            case 8:
+              var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+                  y = imgHeight - watermarkHeight + imgMarginTop;
+
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
+
+            case 9:
+              var x = imgWidth - watermarkWidth + imgMarginLeft,
+                  y = imgHeight - watermarkHeight + imgMarginTop;
+
+              if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+              if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+              break;
+          }
+
+          if (x < imgMarginLeft) x = imgMarginLeft;
+          if (y < imgMarginTop) y = imgMarginTop;
+
+          $workspaceWt
+            .css({top: y, left: x})
+            .attr( 'data-y', y )
+            .attr( 'data-x', x );
+
+          $spinnerX.spinner( "value", (x - imgMarginLeft) );
+          $spinnerY.spinner( "value", (y - imgMarginTop) );
+        });
+      }
+
+    }).change();
 };
 
 module.exports = {
