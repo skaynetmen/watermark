@@ -6,6 +6,8 @@ var centerImg = function(){
     at: "center center"
   });
 }
+
+// Центрирование вотермарка по отношению к фоновой картинке
 var centerWt = function(){
   $("#workspaceWt").position({
     of: $("#workspaceImg"),
@@ -19,20 +21,23 @@ var drag = function(){
   $("#workspaceWt").draggable({
     containment:"#workspaceImg",
     snap:"#workspaceImg",
+    scroll: false,
     drag: function(){
-      var position = $(this).position();
-      var xPos = position.left;
-      var yPos = position.top;
+      var position = $(this).position(),
+          imgMarginTop = $('#workspaceImg').position().top, // shows distance from workspaceImg to workspace
+          imgMarginLeft = $('#workspaceImg').position().left,
+          xPos = position.left,
+          yPos = position.top;
 
-      $("#workspaceWt").attr('data-x', xPos);
-      $("#workspaceWt").attr('data-y', yPos);
-      $("#spinner-1").spinner( "value", xPos );
-      $("#spinner-2").spinner( "value", yPos );
+      $("#workspaceWt").attr('data-x', xPos - imgMarginLeft);
+      $("#workspaceWt").attr('data-y', yPos - imgMarginTop);
+      $("#spinner-1").spinner( "value", xPos - imgMarginLeft);
+      $("#spinner-2").spinner( "value", yPos - imgMarginTop);
   }
   });
 };
 
-// Позиционирование спиннером
+// Позиционирование спиннерами
 var spinX = function(){
   var imgWidth = $("#workspaceImg").outerWidth(),
       watermarkWidth = $("#workspaceWt").outerWidth(true);
@@ -43,8 +48,8 @@ var spinX = function(){
       spin: function(event, ui) {
         $(this).change();
         var x = $(this).spinner('value');
-        $("#workspaceWt").attr('data-x', x);
-        $("#workspaceWt").css({left: x});
+        $("#workspaceWt").attr('data-x', (x + $('#workspaceImg').position().left));
+        $("#workspaceWt").css({left: (x + $('#workspaceImg').position().left)});
       }
   });
 };
@@ -57,8 +62,8 @@ var spinY = function(){
       max: imgHeight - watermarkHeight,
       spin: function(event, ui) {
         var y = $(this).spinner('value');
-        $("#workspaceWt").attr('data-y', y);
-        $("#workspaceWt").css({top: y});
+        $("#workspaceWt").attr('data-y', (y + $('#workspaceImg').position().top));
+        $("#workspaceWt").css({top: (y + $('#workspaceImg').position().top)});
       }
   });
 };
@@ -66,184 +71,156 @@ var spinY = function(){
 // Позиционирование сеткой
 var grid = function(value){
 
-  var imgHeight = $("#workspace").outerHeight(),
+  var $workspaceWt = $("#workspaceWt"),
+    	$spinnerX = $("#spinner-1"),
+    	$spinnerY = $("#spinner-2"),
+      imgMarginTop = $('#workspaceImg').position().top,
+      imgMarginLeft = $('#workspaceImg').position().left,
+      imgHeight = $("#workspaceImg").outerHeight(),
+      imgWidth = $("#workspaceImg").outerWidth(),
       watermarkHeight = $("#workspaceWt").outerHeight(true),
-      imgWidth = $("#workspace").outerWidth(),
-      watermarkWidth = $("#workspaceWt").outerWidth(true),
-      gridPaddingHeight = (imgHeight/3 - watermarkHeight)/2,
-      gridDaddingWidth = (imgWidth/3 - watermarkWidth)/2 ;
+      watermarkWidth = $("#workspaceWt").outerWidth(true);
 
+      // Для позиционирование в центре каждой ячейки сетки
+      // gridPaddingHeight = ((imgHeight/3 - watermarkHeight)/2) + imgMarginTop,
+      // gridPaddingWidth = ((imgWidth/3 - watermarkWidth)/2) + imgMarginLeft;
 
-  // $(".grid__link").on('click', function(e) {
-  //   e.preventDefault();
-  //
-  //   if ($(this).data('value', 1 )) {
-  //   var x = gridDaddingWidth,
-  //       y = gridPaddingHeight;
-  //   }
-  //
-  //   if ($(this).data('value', 2 )) {
-  //   var x = imgWidth/3 + gridDaddingWidth,
-  //       y = gridPaddingHeight;
-  //   }
-  //
-  //   $("#workspaceWt").css({top: y, left: x});
-  //   $("#workspaceWt").attr( 'data-y', y );
-  //   $("#workspaceWt").attr( 'data-x', x );
-  //   $("#spinner-1").spinner( "value", x );
-  //   $("#spinner-2").spinner( "value", y );
-  //
-  // })
-
-  $(".grid__link_1").on('click', function(e) {
+  $(".grid__link").on('click', function(e) {
     e.preventDefault();
 
-    var x = gridDaddingWidth,
-        y = gridPaddingHeight;
+    var $that = $(this),
+        gridNumber = parseInt($that.data('value')),
+        x = 0,
+        y = 0;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
+    switch(gridNumber) {
+      case 1:
+        var x = imgMarginLeft,
+            y = imgMarginTop;
+        break;
 
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
+      case 2:
+        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+            y = imgMarginTop;
+        break;
 
-  $(".grid__link_2").on('click', function(e) {
-    e.preventDefault();
+      case 3:
+        var x = imgWidth - watermarkWidth + imgMarginLeft,
+            y = imgMarginTop;
 
-    var x = imgWidth/3 + gridDaddingWidth,
-        y = gridPaddingHeight;
+        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+        break;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
+      case 4:
+        var x = imgMarginLeft,
+            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+        break;
 
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
+      case 5:
+        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
+        break;
 
-  $(".grid__link_3").on('click', function(e) {
-    e.preventDefault();
+      case 6:
+        var x = imgWidth - watermarkWidth + imgMarginLeft,
+            y = imgHeight/2 - watermarkHeight/2 + imgMarginTop;
 
-    var x = (imgWidth - imgWidth/3) + gridDaddingWidth,
-        y = gridPaddingHeight;
+        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+        break;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth;
+      case 7:
+        var x = imgMarginLeft,
+            y = imgHeight - watermarkHeight + imgMarginTop;
 
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
+        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+        break;
 
-  $(".grid__link_4").on('click', function(e) {
-    e.preventDefault();
+      case 8:
+        var x = imgWidth/2 - watermarkWidth/2 + imgMarginLeft,
+            y = imgHeight - watermarkHeight + imgMarginTop;
 
-    var x = gridDaddingWidth,
-        y = imgHeight/3 + gridPaddingHeight;
+        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+        break;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
+      case 9:
+        var x = imgWidth - watermarkWidth + imgMarginLeft,
+            y = imgHeight - watermarkHeight + imgMarginTop;
 
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
+        if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+        if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+        break;
+    }
 
-  $(".grid__link_5").on('click', function(e) {
-    e.preventDefault();
+    // Позиционирование в центре каждой ячейки сетки
+    // switch(gridNumber) {
+    //   case 1:
+    //     var x = gridPaddingWidth,
+    //         y = gridPaddingHeight;
+    //     break;
+    //
+    //   case 2:
+    //     var x = imgWidth/3 + gridPaddingWidth,
+    //         y = gridPaddingHeight;
+    //     break;
+    //
+    //   case 3:
+    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+    //         y = gridPaddingHeight;
+    //
+    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+    //     break;
+    //
+    //   case 4:
+    //     var x = gridPaddingWidth,
+    //         y = imgHeight/3 + gridPaddingHeight;
+    //     break;
+    //
+    //   case 5:
+    //     var x = imgWidth/3 + gridPaddingWidth,
+    //         y = imgHeight/3 + gridPaddingHeight;
+    //     break;
+    //
+    //   case 6:
+    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+    //         y = imgHeight/3 + gridPaddingHeight;
+    //
+    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+    //     break;
+    //
+    //   case 7:
+    //     var x = gridPaddingWidth,
+    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
+    //
+    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+    //     break;
+    //
+    //   case 8:
+    //     var x = imgWidth/3 + gridPaddingWidth,
+    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
+    //
+    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+    //     break;
+    //
+    //   case 9:
+    //     var x = (imgWidth - imgWidth/3) + gridPaddingWidth,
+    //         y = (imgHeight - imgHeight/3) + gridPaddingHeight;
+    //
+    //     if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth + imgMarginLeft;
+    //     if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight + imgMarginTop;
+    //     break;
+    // }
 
-    var x = imgWidth/3 + gridDaddingWidth,
-        y = imgHeight/3 + gridPaddingHeight;
+    if (x < imgMarginLeft) x = imgMarginLeft;
+    if (y < imgMarginTop) y = imgMarginTop;
 
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
+    $workspaceWt
+      .css({top: y, left: x})
+      .attr( 'data-y', y )
+      .attr( 'data-x', x );
 
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
-
-  $(".grid__link_6").on('click', function(e) {
-    e.preventDefault();
-
-    var x = (imgWidth - imgWidth/3) + gridDaddingWidth,
-        y = imgHeight/3 + gridPaddingHeight;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth;
-
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
-
-  $(".grid__link_7").on('click', function(e) {
-    e.preventDefault();
-
-    var x = gridDaddingWidth,
-        y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight;
-
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
-
-  $(".grid__link_8").on('click', function(e) {
-    e.preventDefault();
-
-    var x = imgWidth/3 + gridDaddingWidth,
-        y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight;
-
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
-
-  $(".grid__link_9").on('click', function(e) {
-    e.preventDefault();
-
-    var x = (imgWidth - imgWidth/3) + gridDaddingWidth,
-        y = (imgHeight - imgHeight/3) + gridPaddingHeight;
-
-    if (x < 0) x = 0;
-    if (y < 0) y = 0;
-    if (watermarkWidth > imgWidth/3) x = imgWidth - watermarkWidth;
-    if (watermarkHeight > imgHeight/3) y = imgHeight - watermarkHeight;
-
-    $("#workspaceWt").css({top: y, left: x});
-    $("#workspaceWt").attr( 'data-y', y );
-    $("#workspaceWt").attr( 'data-x', x );
-    $("#spinner-1").spinner( "value", x );
-    $("#spinner-2").spinner( "value", y );
-  })
+    $spinnerX.spinner( "value", (x - imgMarginLeft) );
+    $spinnerY.spinner( "value", (y - imgMarginTop) );
+  });
 };
 
 module.exports = {
