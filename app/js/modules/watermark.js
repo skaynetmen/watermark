@@ -1,3 +1,93 @@
+// Заполнение рабочей зоны копиями водяного знака
+var wtClone = function(){
+  $('#buttonTile').on('click', function (e) {
+    e.preventDefault();
+
+    var wtImg = $('.workspace__watermark-img'),
+        imgWidth = $("#workspaceImg").outerWidth(),
+        imgHeight = $("#workspaceImg").outerHeight(),
+        w = screen.width/wtImg.outerWidth(),
+        h = screen.height/wtImg.outerHeight();
+
+    // Создает новый элемент для заполнения его копиями водяного знака
+    $('<div id="workspaceTile"></div>')
+      .prependTo('#workspaceWt')
+      .css({"width": screen.width*2, "height": "100%", "font-size": 0 })
+      .offset({top: 0, left: 0});
+
+    // Устанавливает число копий водяного знака и помещает их в нужный элемент
+    for (var i = 1; i < (w*h)*8 ; i++) {
+      wtImg
+        .prependTo('#workspaceTile')
+        .clone()
+        .insertAfter(wtImg);
+    }
+
+    // Подготовка элементов рабочего пространства
+    $('#workspaceWt')
+      .css({"width": imgWidth, "height": imgHeight, "overflow": "hidden"})
+      .draggable('destroy');
+    $('.workspace__watermark-img')
+      .css({"max-width": imgWidth, "max-height": imgHeight})
+      .attr('id', 'start');
+    centerWt();
+    $('#buttonTile').addClass('active');
+    $('.watermark__stripe').show();
+
+    // Делает перетаскиваемой группу водяных знаков
+    var selectedClass = 'workspace__watermark-img';
+    var $draggableElems = $(".workspace__watermark-img").draggable({
+      scroll: false,
+      start: function(e, ui) {
+        if (e.target.id == "start") $draggableElems.addClass(selectedClass);
+        else return false;
+      },
+      drag: function(e, ui) {
+        if (e.target.id == "start") {
+          $('.' + selectedClass).css({
+            top: ui.position.top,
+            left: ui.position.left
+          });
+        }
+      }
+    });
+
+    // Обнуление значений спиннеров
+    $("#spinner-1").spinner( "value", 0 );
+    $("#spinner-2").spinner( "value", 0 );
+
+    // Задает новую логику работы спиннеров
+    $("#spinner-1").spinner({
+      min: 0,
+      max: 100,
+      spin: function(event, ui) {
+        $(this).change();
+        var x = $(this).spinner('value');
+        $('.workspace__watermark-img').css({ "margin-right": x });
+        $('.watermark__stripe_width').css({ "width": x/3.33 + "%", "left": 50 - x/6.66 + "%" });
+      }
+    });
+
+    $("#spinner-2").spinner({
+      min: 0,
+      max: 100,
+      spin: function(event, ui) {
+        $(this).change();
+        var y = $(this).spinner('value');
+        $('.workspace__watermark-img').css({ "margin-bottom": y });
+        $('.watermark__stripe_height').css({ "height": y/3.33 + "%", "top": 50 - y/6.66 + "%"  });
+      }
+    });
+
+    // Убирает возможность клика по элементам
+    if($('#buttonTile').hasClass('active')) {
+      $('.grid__link').css({ "pointer-events": "none" });
+      $('#buttonTile').css({ "pointer-events": "none" });
+    }
+
+  })
+}
+
 // Центрирование фоновой картинки в рабочей зоне
 var centerImg = function(){
   $("#workspaceImg").position({
@@ -170,6 +260,7 @@ var grid = function(value){
       } else {
 
         // Позиционирование в ячейках по краям фонового изображения
+
         $(".grid__link").on('click', function(e) {
           e.preventDefault();
 
@@ -254,6 +345,7 @@ var grid = function(value){
 
 module.exports = {
   init: function() {
+    wtClone();
     centerImg();
     centerWt();
     drag();
