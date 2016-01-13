@@ -3,5 +3,75 @@ extends common/layout
 block title
 		title Генератор водяных знаков
 
-//block content
-//    h1 Генератор водяных знаков
+block content
+    .generator
+        .desktop
+            h1.desktop__title Генератор водяных знаков
+
+            .desktop__area
+                div(style='height: 366px;')#workspace.workspace
+                    img(src='uploads/img.jpg' alt='img').workspace__img
+                    div(style='height: 40.66666666px;')#workspaceWt.workspace__watermark
+                        img(src='uploads/watermark.png' alt='watermark').workspace__watermark-img
+
+        aside.settings
+            h2.settings__title Настройки
+
+            .settings__section
+                form.form
+                    .form__section
+                        label(for='uploadImg').form__label Исходное изображение
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadImg').hidden
+
+                            .form__upload-group
+                                input(type='text').form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
+
+                form.form
+                    .form__section
+                        label(for='uploadWatermark').form__label Водяной знак
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadWatermark').hidden
+
+                            .form__upload-group
+                                input(type='text').form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
+
+            .settings__section
+                span.settings__label Положение
+
+                .settings__wrapper
+                    - var i = 1
+                    .grid
+                        ul.grid__list
+                            while i <= 9
+                                li.grid__item
+                                    a(href='#' data-value='#{i}').grid__link= i++
+                        div(style='display:none;').grid__padding
+                            .grid__padding-x
+                            .grid__padding-y
+
+                    .spinners
+                        .spinners__x
+                            label.spinners__label X
+                            input(type='text' id='spinner-1' value='0').spinners__input
+
+                        .spinners__y
+                            label.spinners__label X
+                            input(type='text' id='spinner-2' value='0').spinners__input
+
+            .settings__section
+                span.settings__label Прозрачность
+
+                #slider.slider
+
+            .settings__footer
+                .settings__footer-left
+                    button(type='button')#reset.settings__btn Сброс
+                .settings__footer-right
+                    button(type='button')#submit.settings__btn.settings__btn_red Скачать

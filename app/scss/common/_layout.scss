@@ -1,12 +1,18 @@
 body {
-  background-color: #f4f4f4;
+  background-color: #ad7f81;
   font-family: 'open_sansregular', 'Open Sans Regular', sans-serif;
   font-size: $font-size;
+}
+
+.bg {
+  background: url('../img/bg.jpg') no-repeat fixed;
+  background-size: cover;
 }
 
 .wrapper {
   min-width: $container-width + 20;
   min-height: 100%;
+  padding-top: 60px;
   margin-bottom: -$footer-height;
 
   &:after {

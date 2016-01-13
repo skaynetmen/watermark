@@ -3,9 +3,8 @@
   "dependencies": {
     "jquery-ui": "~1.11.4",
     "blueimp-file-upload": "jquery-file-upload#~9.11.2",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "normalize-css": "normalize.css#~3.0.3"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

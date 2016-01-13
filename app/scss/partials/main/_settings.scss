@@ -1,0 +1,242 @@
+.settings {
+  position: relative;
+  width: $container-width - 702;
+  height: 100%;
+  float: left;
+  background-color: #f1f1f5;
+}
+
+.settings__title {
+  padding: 30px 10px 40px;
+  margin: 0;
+  font-size: em(26);
+  line-height: 28px;
+  text-align: center;
+}
+
+.settings__section {
+  position: relative;
+  padding: 5px 18px 30px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f4c3c2;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 9px solid transparent;
+    border-top-color: #f1f1f5;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #f4c3c2;
+  }
+}
+
+/* Формы */
+
+.form {
+  &:last-child .form__section {
+    margin-bottom: 0;
+  }
+}
+
+.form__section {
+  margin-bottom: 25px;
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: em(14);
+  line-height: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.form__upload-group {
+  display: table;
+
+  .form__input {
+    width: 100%;
+    display: table-cell;
+    @include border-radius(4px 0 0 4px);
+  }
+
+  .form__btn {
+    @include border-radius(0 4px 4px 0);
+  }
+}
+
+.form__input {
+  height: 27px;
+  background-color: #f1f1f5;
+  border: 1px solid #9eb2c0;
+  border-right-width: 0;
+  @include border-radius(4px);
+}
+
+.form__upload-group-btn {
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.form__btn {
+  height: 27px;
+  padding: 0 9px;
+  background-color: $red;
+  border: none;
+  @include border-radius(4px);
+
+  &:active {
+    background-color: darken($red, 10%);
+    outline: 0;
+  }
+}
+
+.icon-cloud {
+  display: inline-block;
+  @include get-sprite($icons-sprite, 'cloud');
+}
+
+/* Положение */
+
+.settings__wrapper {
+  @extend %clearfix;
+}
+
+.settings__label {
+  display: block;
+  margin-bottom: 30px;
+  font-size: em(14);
+  line-height: 16px;
+}
+
+.grid {
+  width: 50%;
+  float: left;
+}
+
+.grid__list {
+  display: block;
+  width: 103px;
+  height: 103px;
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0;
+  border-right: 1px solid #9eb2c0;
+  border-bottom: 1px solid #9eb2c0;
+}
+
+.grid__item {
+  display: inline-block;
+}
+
+.grid__item_active .grid__link {
+  background-color: #f97e76;
+}
+
+.grid__link {
+  display: block;
+  width: 34px;
+  height: 34px;
+  background-color: #dbe1e8;
+  border-top: 1px solid #9eb2c0;
+  border-left: 1px solid #9eb2c0;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: darken(#dbe1e8, 10%);
+  }
+}
+
+.spinners {
+  @extend .grid;
+}
+
+.spinners__input {
+  width: 100%;
+}
+
+.slider {
+  height: 3px;
+  background-color: #dbe1e8;
+}
+
+.settings__footer {
+  position: absolute;
+  bottom: 0;
+  padding: 25px 10px;
+  width: 100%;
+
+  @extend %clearfix;
+}
+
+.settings__footer-left {
+  width: 50%;
+  float: left;
+  text-align: left;
+}
+
+.settings__footer-right {
+  @extend .settings__footer-left;
+  text-align: right;
+}
+
+.settings__btn {
+  width: 99px;
+  padding: 10px;
+  background-color: #c1cfd9;
+  border: 0;
+  @include border-radius(4px);
+  color: #ffffff;
+
+  &:hover {
+    background-color: darken(#c1cfd9, 10%);
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &:active {
+    background-color: darken(#c1cfd9, 5%);
+
+  }
+}
+
+.settings__btn_red {
+  background-color: $red;
+
+  &:hover {
+    background-color: darken($red, 10%);
+  }
+
+  &:active {
+    background-color: darken($red, 5%);
+  }
+}
+
+
+
