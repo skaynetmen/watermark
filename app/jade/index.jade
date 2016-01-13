@@ -26,7 +26,7 @@ block content
                             input(type='file' name='files[]' id='uploadImg').hidden
 
                             .form__upload-group
-                                input(type='text').form__input
+                                input(type='text', placeholder='image.jpg', readonly).form__input
                                 .form__upload-group-btn
                                     button(type='button').form__btn
                                         i.icon-cloud
@@ -38,7 +38,7 @@ block content
                             input(type='file' name='files[]' id='uploadWatermark').hidden
 
                             .form__upload-group
-                                input(type='text').form__input
+                                input(type='text', placeholder='image.png', readonly).form__input
                                 .form__upload-group-btn
                                     button(type='button').form__btn
                                         i.icon-cloud
@@ -46,16 +46,24 @@ block content
             .settings__section
                 span.settings__label Положение
 
+                .mode
+                    ul.mode__list
+                        li.mode__item
+                            a(href='#').mode__link.mode__link_tile Плитка
+                        li.mode__item.mode__item_active
+                            a(href='#').mode__link.mode__link_single Одиночный
+
                 .settings__wrapper
                     - var i = 1
                     .grid
-                        ul.grid__list
-                            while i <= 9
-                                li.grid__item
-                                    a(href='#' data-value='#{i}').grid__link= i++
-                        div(style='display:none;').grid__padding
-                            .grid__padding-x
-                            .grid__padding-y
+                        .grid__wrapper
+                            ul.grid__list
+                                while i <= 9
+                                    li.grid__item
+                                        a(href='#' data-value='#{i}').grid__link= i++
+                            div(style='display:none;').grid__padding
+                                div(style='height: 10px').grid__padding-x
+                                div(style='width: 10px').grid__padding-y
 
                     .spinners
                         .spinners__x
@@ -63,7 +71,7 @@ block content
                             input(type='text' id='spinner-1' value='0').spinners__input
 
                         .spinners__y
-                            label.spinners__label X
+                            label.spinners__label Y
                             input(type='text' id='spinner-2' value='0').spinners__input
 
             .settings__section
