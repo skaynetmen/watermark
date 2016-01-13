@@ -25,7 +25,10 @@ var compassConfig = {
 
 gulp.task('server', function () {
     browserSync.init({
-       proxy: "watermark/app"
+        port: 9000,
+        server: {
+            baseDir: 'app'
+        }
     });
 });
 
