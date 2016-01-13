@@ -27,13 +27,14 @@ html(class='no-js', lang='ru-RU')
         link(rel="icon", type='image/png', sizes="16x16", href="favicon.png")
         link(rel="stylesheet" type='text/css' href="bower/jquery-ui/themes/base/jquery-ui.css")
         //build:css css/main.min.css
+        link(rel="stylesheet", href="bower/normalize-css/normalize.css")
         link(rel="stylesheet", href="css/main.css")
         //endbuild
-    body
+    body.bg
         .wrapper
-            //include ../partials/header
-
-            //block content
+            main.main
+                .container
+                    block content
 
         include ../partials/footer
         script(src="bower/jquery/dist/jquery.min.js")
