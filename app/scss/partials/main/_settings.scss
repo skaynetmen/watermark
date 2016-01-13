@@ -320,16 +320,96 @@
 
 .spinners {
   @extend .grid;
-  text-align: right;
+
+  .ui-spinner-button {
+    position: absolute;
+    display: block;
+    right: 0;
+    overflow: hidden;
+    text-indent: 9999px;
+    cursor: pointer;
+  }
+
+  .ui-spinner-up {
+    top: 5px;
+    @include get-sprite($icons-sprite, 'arrow-up');
+
+    &:hover {
+      @include get-sprite($icons-sprite, 'arrow-up-hover');
+    }
+  }
+
+  .ui-spinner-down {
+    bottom: 5px;
+    @include get-sprite($icons-sprite, 'arrow-down');
+
+    &:hover {
+      @include get-sprite($icons-sprite, 'arrow-down-hover');
+    }
+  }
+}
+
+.spinners__x,
+.spinners__y {
+  position: relative;
+  width: 85px;
+  float: right;
+}
+
+.spinners__x {
+  margin-bottom: 11px;
+}
+
+.spinners__label {
+  display: inline-block;
 }
 
 .spinners__input {
-  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  width: 46px;
+  height: 45px;
+  padding: 0 3px;
+  margin-left: 5px;
+  background-color: #f1f1f5;
+  border: 1px solid #9eb2c0;
+  border-radius: 2px;
+  color: #444a53;
+  text-align: center;
 }
 
 .slider {
+  position: relative;
   height: 3px;
   background-color: #dbe1e8;
+  z-index: 1;
+
+  .ui-slider-handle {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+    background-color: #dbe1e8;
+    @include border-radius(50%);
+    z-index: 2;
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 8px;
+      height: 8px;
+      background-color: #9eb2c0;
+      @include border-radius(50%);
+    }
+  }
 }
 
 .settings__footer {
