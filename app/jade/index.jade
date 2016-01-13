@@ -1,77 +1,86 @@
 extends common/layout
 
 block title
-		title Генератор водяных знаков
+    title Генератор водяных знаков
+
 
 block content
-	.generator
-			.desktop
-					h1.desktop__title Генератор водяных знаков
+    .generator
+        .desktop
+            h1.desktop__title Генератор водяных знаков
 
-					.desktop__area
-							div(style='height: 366px;')#workspace.workspace
-									img(src='uploads/img.jpg' alt='img').workspace__img
-									div(style='height: 40.66666666px;')#workspaceWt.workspace__watermark
-											img(src='uploads/watermark.png' alt='watermark').workspace__watermark-img
+            .desktop__area
+                div(style='height: 366px;')#workspace.workspace
+                    img(src='uploads/img.jpg' alt='img').workspace__img
+                    div(style='height: 40.66666666px;')#workspaceWt.workspace__watermark
+                        img(src='uploads/watermark.png' alt='watermark').workspace__watermark-img
 
-			aside.settings
-					h2.settings__title Настройки
+        aside.settings
+            h2.settings__title Настройки
 
-					.settings__section
-							form.form
-									.form__section
-											label(for='uploadImg').form__label Исходное изображение
-											.form__upload
-													input(type='file' name='files[]' id='uploadImg').hidden
+            .settings__section
+                form.form
+                    .form__section
+                        label(for='uploadImg').form__label Исходное изображение
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadImg').hidden
 
-													.form__upload-group
-															input(type='text').form__input
-															.form__upload-group-btn
-																	button(type='button').form__btn
-																			i.icon-cloud
+                            .form__upload-group
+                                input(type='text', placeholder='image.jpg', readonly).form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
 
-							form.form
-									.form__section
-											label(for='uploadWatermark').form__label Водяной знак
-											.form__upload
-													input(type='file' name='files[]' id='uploadWatermark').hidden
+                form.form
+                    .form__section
+                        label(for='uploadWatermark').form__label Водяной знак
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadWatermark').hidden
 
-													.form__upload-group
-															input(type='text').form__input
-															.form__upload-group-btn
-																	button(type='button').form__btn
-																			i.icon-cloud
+                            .form__upload-group
+                                input(type='text', placeholder='image.png', readonly).form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
 
-					.settings__section
-							span.settings__label Положение
+            .settings__section
+                span.settings__label Положение
 
-							.settings__wrapper
-									- var i = 1
-									.grid
-											ul.grid__list
-													while i <= 9
-															li.grid__item
-																	a(href='#' data-value='#{i}').grid__link= i++
-											div(style='display:none;').grid__padding
-													.grid__padding-x
-													.grid__padding-y
+                .mode
+                    ul.mode__list
+                        li.mode__item
+                            a(href='#').mode__link.mode__link_tile Плитка
+                        li.mode__item.mode__item_active
+                            a(href='#').mode__link.mode__link_single Одиночный
 
-									.spinners
-											.spinners__x
-													label.spinners__label X
-													input(type='text' id='spinner-1' value='0').spinners__input
+                .settings__wrapper
+                    - var i = 1
+                    .grid
+                        .grid__wrapper
+                            ul.grid__list
+                                while i <= 9
+                                    li.grid__item
+                                        a(href='#' data-value='#{i}').grid__link= i++
+                            div(style='display:none;').grid__padding
+                                div(style='height: 10px').grid__padding-x
+                                div(style='width: 10px').grid__padding-y
 
-											.spinners__y
-													label.spinners__label X
-													input(type='text' id='spinner-2' value='0').spinners__input
+                    .spinners
+                        .spinners__x
+                            label.spinners__label X
+                            input(type='text' id='spinner-1' value='0').spinners__input
 
-					.settings__section
-							span.settings__label Прозрачность
+                        .spinners__y
+                            label.spinners__label Y
+                            input(type='text' id='spinner-2' value='0').spinners__input
 
-							#slider.slider
+            .settings__section
+                span.settings__label Прозрачность
 
-					.settings__footer
-							.settings__footer-left
-									button(type='button')#reset.settings__btn Сброс
-							.settings__footer-right
-									button(type='button')#submit.settings__btn.settings__btn_red Скачать
+                #slider.slider
+
+            .settings__footer
+                .settings__footer-left
+                    button(type='button')#reset.settings__btn Сброс
+                .settings__footer-right
+                    button(type='button')#submit.settings__btn.settings__btn_red Скачать
