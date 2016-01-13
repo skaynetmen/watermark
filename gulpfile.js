@@ -25,10 +25,7 @@ var compassConfig = {
 
 gulp.task('server', function () {
     browserSync.init({
-        port: 9000,
-        server: {
-            baseDir: 'app'
-        }
+       proxy: "watermark/app"
     });
 });
 
@@ -64,7 +61,7 @@ gulp.task('watch', function () {
     ]).on('change', browserSync.reload);
 });
 
-gulp.task('default', ['server', 'watch']);
+gulp.task('default', ['jade', 'sass', 'server', 'watch']);
 
 gulp.task('assets', ['sass', 'jade', 'scripts'], function () {
     return gulp.src('app/*.html')
