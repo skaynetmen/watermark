@@ -1,13 +1,10 @@
 section.sidebar
-    ul.sidebar__list
+    ul.sidebar__list.language
         li.sidebar__item
-            a(href='#')#ru.sidebar__link РУС
+            a(href='#', data-lang='ru').sidebar__link РУС
         li.sidebar__item
-            a(href='#')#en.sidebar__link ENG
+            a(href='#', data-lang='en').sidebar__link ENG
 
     .socials
-        a(href='#')#share.sidebar__link.sidebar__link_like like
-        ul.sidebar__list.socials__list
-            each item in ['vkontakte', 'facebook', 'twitter']
-                li.sidebar__item
-                    a(href='#', class='sidebar__link sidebar__link_#{item}') #{item}
+        a(href='#').sidebar__link.sidebar__link_like like
+        #share.socials__list

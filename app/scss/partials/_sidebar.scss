@@ -56,26 +56,56 @@
   float: right;
   width: 50%;
   border-bottom-width: 0;
+
+  text-indent: -9999px;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    @extend %absolute-center;
+    @include get-sprite($icons-sprite, 'like');
+  }
+
+  &:hover:before {
+    @include get-sprite($icons-sprite, 'like');
+  }
 }
 
 .socials__list {
   float: left;
   width: 50%;
+
+  .ya-share2__list_direction_horizontal > .ya-share2__item {
+    @extend .sidebar__item;
+  }
+
+  .ya-share2__link {
+    @extend .sidebar__link;
+
+    padding: 21px 2px;
+  }
+
+  .ya-share2__badge,
+  .ya-share2__title {
+    display: none;
+  }
 }
 
-@each $item in vkontakte, twitter, facebook, like {
-  .sidebar__link_#{$item} {
-    text-indent: -9999px;
-    overflow: hidden;
+@each $item in vkontakte, twitter, facebook {
+  .ya-share2__item_service_#{$item} {
+    .ya-share2__link {
+      text-indent: -9999px;
+      overflow: hidden;
 
-    &:before {
-      content: '';
-      @extend %absolute-center;
-      @include get-sprite($icons-sprite, '#{$item}');
-    }
+      &:before {
+        content: '';
+        @extend %absolute-center;
+        @include get-sprite($icons-sprite, '#{$item}');
+      }
 
-    &:hover:before {
-      @include get-sprite($icons-sprite, '#{$item}-hover');
+      &:hover:before {
+        @include get-sprite($icons-sprite, '#{$item}-hover');
+      }
     }
   }
 }

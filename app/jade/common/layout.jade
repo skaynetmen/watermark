@@ -38,11 +38,15 @@ html(class='no-js', lang='ru-RU')
 
         include ../partials/footer
         include ../partials/sidebar
+        //build:js js/vendor.min.js
         script(src="bower/jquery/dist/jquery.min.js")
         script(src="bower/jquery-ui/jquery-ui.min.js")
         script(src="bower/blueimp-file-upload/js/jquery.iframe-transport.js")
         script(src="bower/blueimp-file-upload/js/jquery.fileupload.js")
+        script(src="js/vendor/jquery.localize.min.js")
+        //endbuild
         //build:js js/bundle.min.js
         script(src='js/bundle.js')
         //endbuild
+        script(src="https://yastatic.net/share2/share.js")
         //script(src='js/dev.js')
