@@ -34,7 +34,7 @@ $(document).ready(function () {
         $('.language').on('click', '.sidebar__link', function (e) {
             e.preventDefault();
 
-            $strings.localize('language', {language: $(this).data('en', 'ru')});
+            $strings.localize('language', {language: $(this).data('lang')});
         });
     })();
 });
