@@ -1,3 +1,10 @@
 {
-  "title": "Watermark generator"
+  "title": "Watermark generator",
+  "settings": "Settings",
+  "sourceImage": "Source image",
+  "sourceWatermark": "Water mark",
+  "position": "Position",
+  "transparency": "Opacity",
+  "reset": "Reset",
+  "download": "Download"
 }
