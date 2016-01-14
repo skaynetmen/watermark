@@ -8,4 +8,4 @@ app/css/*.css
 app/css/*.map
 app/img/icons-*.png
 app/js/bundle.js
-vendor
+/vendor

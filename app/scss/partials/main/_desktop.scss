@@ -24,6 +24,7 @@
 
 .workspace {
   @extend %absolute-center;
+  overflow: hidden;
 }
 
 .workspace__img {
