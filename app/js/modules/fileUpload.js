@@ -1,61 +1,61 @@
-//Объявление модуля
-var fileUpload = (function (){
+// ------------ Функция работы кнопок смены языков ----------------
 
-//инициализация модуля
-var init = function(){
-	_setupListeners();
-};
-//прослушиваемые события
-var _setupListeners = function (){
-	_fileUploadFn('#uploadImg', '.workspace__img');
-	_fileUploadFn('#uploadWatermark', '.workspace__watermark-img');
-};
-//Грузим файлы на сервер
-var _fileUploadFn = function (inputFile, container) {
+var lang = function () {
+    var langInit = function () {
+        _setupListners();
+    };
+    var _setupListners = function(){
+        // В зависимости от того, какая кнопка нажата,
+        // запускается функция с параметрами rus или eng
+        $('#en').on('click', function(){
+            $('.sidebar__link').removeClass('active');
+            $('#en').addClass('active');
+            _ajaxChange('eng');
+        });
+        $('#ru').on('click', function(){
+            $('#en').removeClass('active');
+            $('#ru').addClass('active');
+            _ajaxChange('rus');
+        });
+    };
 
-	//рабочие элементы
-	var inputImg = $(inputFile),
-			inputImgContainer = inputImg.closest('.form__label', '.form__upload'),
-			fakeTextUrl = inputImgContainer.find('.form__input'),
-			fileName = inputImgContainer.find('.form__upload-group-btn'),
-			progressWrap = inputImgContainer.find('#progress'),
-			progressBar = inputImgContainer.find('.progress-bar'),
-			wrapContainer = $(container).closest('.workspace__img');
+    // Функция смены языков
+    var _ajaxChange = function (lang) {
+        // Делаем AJAX запрос данных на сервер
+        $.ajax({
+                // Адрес обрабатывающего скрипты
+                url: 'api/langChange.php',
+                // Метод, которым отправляем данные
+                type:'POST',
+                // Тип отправляемых данных
+                dataType: 'json',
+                // Сами данные, которые преобразовываем в JSON строку
+                data:'jsonLang=' + JSON.stringify(lang)
+            })
 
-	 //Инициализируем FileUpload
-				$(inputFile).fileupload({
+            // При ошибке на сервере, выполняется данная функция
+            .fail(function(langObj) {
+                console.log('Проблемы в PHP');
+            })
 
-						// Папка где располагается PHP скрипт jQuery File Upload 
-						url: 'api/upload.php',
+            // При успешном выполнении скрипта
+            // выводим данные в блоки с текстом
+            .done(function(langObj) {
+                $('.desktop__title').text(langObj.titleContent);
+                $('.settings__title').text(langObj.settings);
+                $('label[for="uploadImg"]').text(langObj.inputMain);
+                $('#fake').text(langObj.inputMainPlace);
+                $('label[for="uploadWatermark"]').text(langObj.inputWater);
+                $('#fakeWat').text(langObj.inputWaterPlace);
+                $('.settings__label').text(langObj.position);
+                $(".settings__label:contains('Прозрачность')").text(langObj.opacity);
+                $('#reset').text(langObj.butClear);
+                $('#submit').text(langObj.butDownload);
+            });
+    };
+    return {
+        init: langInit
+    }
+}();
 
-						// Функция, выполняющаяся при отправке данных на сервер
-						add: function (e, data) {
-							console.log('добавляем');
-								data.submit();
-								},
-						//сервер === "OK"
-						success: function (data) {
-							var imgObj = $.parseJSON(data),
-									imgUrl = 'api/' + imgObj.url;
-
-						 //запись пути элемента в src
-						 $(container).remove;
-						 //если главная картинка, добавляем и меняем размеры
-						 //+ блок под водяной знак
-						 if (container == '.workspace__img') {
-						 	$('<img src="' + imgUrl + '">').appendTo(wrapContainer);
-
-								console.log('Выполнено');
-						 }
-			//главная картинка
-		}
-});
-};
-//возврат объекта. публичные методы
-return {
-	init:init
-};
-
-})();
-//вызываем модуль
-fileUpload.init();
+lang.init();
