@@ -1,13 +1,13 @@
 extends common/layout
 
 block title
-    title Генератор водяных знаков
+    title(data-localize='title') Генератор водяных знаков
 
 
 block content
     .generator
         .desktop
-            h1.desktop__title Генератор водяных знаков
+            h1(data-localize='title').desktop__title Генератор водяных знаков
 
             .desktop__area
                 div(style='height: 366px;')#workspace.workspace
@@ -16,12 +16,12 @@ block content
                         img(src='uploads/watermark.png' alt='watermark').workspace__watermark-img
 
         aside.settings
-            h2.settings__title Настройки
+            h2(data-localize='settings').settings__title Настройки
 
             .settings__section
                 form.form
                     .form__section
-                        label(for='uploadImg').form__label Исходное изображение
+                        label(for='uploadImg', data-localize='sourceImage').form__label Исходное изображение
                         .form__upload
                             input(type='file' name='files[]' id='uploadImg').hidden
 
@@ -33,7 +33,7 @@ block content
 
                 form.form
                     .form__section
-                        label(for='uploadWatermark').form__label Водяной знак
+                        label(for='uploadWatermark', data-localize='sourceWatermark').form__label Водяной знак
                         .form__upload
                             input(type='file' name='files[]' id='uploadWatermark').hidden
 
@@ -44,14 +44,14 @@ block content
                                         i.icon-cloud
 
             .settings__section
-                span.settings__label Положение
+                span(data-localize='position').settings__label Положение
 
                 .mode
                     ul.mode__list
                         li.mode__item
-                            a(href='#').mode__link.mode__link_tile Плитка
+                            a(href='#').mode__link.mode__link_tile Tile
                         li.mode__item.mode__item_active
-                            a(href='#').mode__link.mode__link_single Одиночный
+                            a(href='#').mode__link.mode__link_single Single
 
                 .settings__wrapper
                     - var i = 1
@@ -75,12 +75,12 @@ block content
                             input(type='text' id='spinner-2' value='0').spinners__input
 
             .settings__section
-                span.settings__label Прозрачность
+                span(data-localize='transparency').settings__label Прозрачность
 
                 #slider.slider
 
             .settings__footer
                 .settings__footer-left
-                    button(type='button')#reset.settings__btn Сброс
+                    button(type='button', data-localize='reset')#reset.settings__btn Сброс
                 .settings__footer-right
-                    button(type='button')#submit.settings__btn.settings__btn_red Скачать
+                    button(type='button', data-localize='download')#submit.settings__btn.settings__btn_red Скачать
