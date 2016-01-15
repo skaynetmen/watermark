@@ -236,10 +236,13 @@
   border: 1px solid #9eb2c0;
 
   @include border-radius(4px);
+
+  @extend %clearfix;
 }
 
 .grid__item {
-  display: inline-block;
+  display: block;
+  float: left;
 
   &:first-child .grid__link {
     @include border-radius(4px 0 0 0);
@@ -469,5 +472,20 @@
   }
 }
 
+.disable-settings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 406px;
+  background-color: #625659;
+  opacity: 0.2;
+  z-index: 3;
+}
 
-
+.disable-watermark {
+  @extend .disable-settings;
+  height: 496px;
+  z-index: 4;
+}
