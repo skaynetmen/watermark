@@ -1,9 +1,9 @@
 var  ruEng = require('./modules/language.js'),
-	 watermark = require('./modules/watermark.js'),
-	 slider = require('./modules/slider.js');
+	 slider = require('./modules/slider.js'),
+	 watermark = require('./modules/watermark.js');
 
 $(document).ready(function(){
   ruEng.init();
-  watermark.init();
   slider.init();
+  watermark.init();
 });
