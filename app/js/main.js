@@ -8,18 +8,20 @@ var
 	download = require('./modules/download.js');
 
 $(document).ready(function(){
+	var $disabler = $('#disabler');
+
 	//Запускаем модуль загрузки файлов
 	fileUpload.init();
 
 	//После успешной загрузки изображения разблокируем загрузку водяного знака
 	fileUpload.setSuccessUploadImg(function () {
-	    $('.disable-watermark').fadeOut();
+		$disabler.removeClass('disable-watermark');
 	});
 
 	//После успешной загрузки водяного знака разблокируем настройки
 	//и запускаем модуль положения, слайдера, загрузки и сброса
 	fileUpload.setSuccessUploadWatermark(function () {
-	    $('.disable-settings').fadeOut();
+		$disabler.fadeOut();
 		watermark.init(fileUpload);
 		slider.init();
 		download.init(fileUpload, watermark, slider);
