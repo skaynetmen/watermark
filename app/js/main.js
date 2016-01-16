@@ -8,6 +8,13 @@ $(document).ready(function(){
   ruEng.init();
   socialSharing.init();
   fileUpload.init();
+    fileUpload.setSuccessUploadImg(function () {
+    $('.disable-watermark').fadeOut();
+  });
+  fileUpload.setSuccessUploadWatermark(function () {
+    $('.disable-settings').fadeOut();
+    watermark.init();
+  });
   slider.init();
   watermark.init();
 });
