@@ -2,6 +2,7 @@
 
 var
     moduleSlider,
+    moduleWatermark,
     $reset = $('#reset'),
     $grid = $('.grid__link[data-value="1"]');
 
@@ -10,9 +11,11 @@ var
  * и сбрасываем прозрачность
  */
 function reset() {
-    $grid.trigger('click');
+    if (moduleWatermark && typeof moduleWatermark.resetPosition == 'function') {
+        moduleWatermark.resetPosition();
+    }
 
-    if (moduleSlider && moduleSlider.setOpacity()) {
+    if (moduleSlider && typeof moduleSlider.setOpacity == 'function') {
         moduleSlider.setOpacity(100);
     }
 }
@@ -25,8 +28,9 @@ var init = function() {
 };
 
 module.exports = {
-    init: function (slider) {
+    init: function (slider, watermark) {
         moduleSlider = slider;
+        moduleWatermark = watermark;
 
         init();
     }

@@ -5,16 +5,16 @@ var
 		sliderValue = 100,
 		defaultValue = 0;
 
-function resetOpasity() {
-	$watermark.css("opacity", defaultValue);
-};
+//function resetOpasity() {
+//	$watermark.css("opacity", defaultValue);
+//}
 
 function changeOpasity(event, ui) {
-  	var sliderValue = ui.value,
+	var sliderValue = 100 - ui.value,
   		valueCSS = sliderValue/100;
 
 	$watermark.css("opacity", valueCSS);
-};
+}
 
 var slider = function() {
 
@@ -22,8 +22,7 @@ var slider = function() {
 	  	min: 0,
 	  	max: 100,
 	  	step: 1,
-	  	value: defaultValue,
-	  	create: resetOpasity,
+		//create: resetOpasity,
 	  	slide: changeOpasity
 	});
 };
@@ -33,7 +32,7 @@ var setOpacity = function (value) {
         sliderValue = value;
 
     $watermark.css('opacity', value / 100);
-    $slider.slider('value', value);
+	$slider.slider('value', 100 - value);
 };
 
 

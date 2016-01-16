@@ -19,5 +19,5 @@ $(document).ready(function(){
 	});
 	slider.init();
 	watermark.init();
-	reset.init(slider);
+    reset.init(slider, watermark);
 });
