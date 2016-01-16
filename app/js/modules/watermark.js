@@ -544,6 +544,8 @@ var wtGrid = function () {
                 $spinnerX.spinner("value", (x - imgMarginLeft));
                 $spinnerY.spinner("value", (y - imgMarginTop));
 
+                positionX = x;
+                positionY = y;
 
                 $that.parent().addClass('grid__item_active').siblings().removeClass('grid__item_active');
             }

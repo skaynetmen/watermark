@@ -108,7 +108,12 @@ gulp.task('clean', function (cb) {
     rimraf('dist', cb);
 });
 
-gulp.task('dist', ['assets', 'images', 'fonts', 'favicon', 'uploads']);
+gulp.task('language', function () {
+    return gulp.src('app/*.json')
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('dist', ['assets', 'images', 'fonts', 'favicon', 'uploads', 'language']);
 
 gulp.task('build', ['clean'], function () {
     console.log('Building files');
