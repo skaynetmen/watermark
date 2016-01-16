@@ -10,10 +10,10 @@ block content
             h1(data-localize='title').desktop__title Генератор водяных знаков
 
             .desktop__area
-                div(style='height: 366px;')#workspace.workspace
-                    img(src='uploads/img.jpg' alt='img').workspace__img
-                    div(style='height: 40.66666666px;')#workspaceWt.workspace__watermark
-                        img(src='uploads/watermark.png' alt='watermark').workspace__watermark-img
+                #workspace.workspace
+                    img(data-src='uploads/img.jpg' alt='').workspace__img
+                    #workspaceWt.workspace__watermark
+                        img(data-src='uploads/watermark.png' alt='').workspace__watermark-img
 
         aside.settings
             h2(data-localize='settings').settings__title Настройки
@@ -85,5 +85,4 @@ block content
                 .settings__footer-right
                     button(type='button', data-localize='download')#submit.settings__btn.settings__btn_red Скачать
 
-            div(style='display:none;').disable-settings
-            div(style='display:none;').disable-watermark
+            #disabler.disable-settings.disable-watermark

@@ -482,10 +482,9 @@
   background-color: #625659;
   opacity: 0.2;
   z-index: 3;
+  transition: height 1s ease;
 }
 
 .disable-watermark {
-  @extend .disable-settings;
   height: 496px;
-  z-index: 4;
 }
