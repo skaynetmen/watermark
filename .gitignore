@@ -9,4 +9,7 @@ app/img/icons-*.png
 app/js/bundle.js
 vendor
 app/uploads
+!app/uploads/.gitkeep
+app/downloads
+!app/downloads/.gitkeep
 .DS_Store
