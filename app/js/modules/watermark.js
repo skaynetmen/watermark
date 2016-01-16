@@ -1,25 +1,33 @@
 // Индикатор режима работа
-var toggle = true;
+// var toggle = true;
 
 // Публичные переменные
-var imgX,
-    imgY,
-    wtMode,
-    marginX,
-    marginY;
-
-console.log(wtMode);
+var wtMode = {
+      toggle: true
+    },
+    imgSinglePos = {
+      imgX: 0,
+      imgY: 0
+    },
+    imgTilePos = {
+      imgX: 0,
+      imgY: 0
+    },
+    margin = {
+      MarginX: 0,
+      MarginY: 0
+    };
 
 // Переключает в режим замощения
 $('.mode__link_tile').on('click', function (e) {
   e.preventDefault();
 
-  var toggle = false;
+  wtMode.toggle = false;
 
-  wtPosition(toggle);
-  wtDrag(toggle);
-  wtSpin(toggle);
-  wtGrid(toggle);
+  wtPosition();
+  wtDrag();
+  wtSpin();
+  wtGrid();
 
   $('.mode__link_tile').addClass('active');
   $('.mode__link_single').removeClass('active');
@@ -30,71 +38,64 @@ $('.mode__link_tile').on('click', function (e) {
 $('.mode__link_single').on('click', function (e) {
   e.preventDefault();
 
-  var toggle = true;
+  wtMode.toggle = true;
 
-  wtPosition(toggle);
-  wtDrag(toggle);
-  wtSpin(toggle);
-  wtGrid(toggle);
+  wtPosition();
+  wtDrag();
+  wtSpin();
+  wtGrid();
 
   $('.mode__link_single').addClass('active');
   $('.mode__link_tile').removeClass('active');
 });
 
 
-var wtImg = $('.workspace__watermark-img'),
-    imgWidth = $('.workspace__img').outerWidth(),
-    imgHeight = $('.workspace__img').outerHeight(),
-    w = screen.width/wtImg.outerWidth(),
-    h = screen.height/wtImg.outerHeight();
-
-// Создает новый элемент-обертку для элемента, содержащего водяные знаки
-$('<div id="workspaceTileWrapper"></div>')
-    .prependTo('#workspace')
-    .css({"width": imgWidth, "height": imgHeight, "position": "absolute", "overflow": "hidden", "z-index": "1" })
-    .position({top: 0, left: 0});
-
-// Создает новый элемент для заполнения его копиями водяного знака
-$('<div id="workspaceTile"></div>')
-    .prependTo('#workspaceTileWrapper')
-    .css({"width": screen.width, "height": screen.width, "font-size": 0 })
-    .offset({top: 0, left: 0});
-
-// Создает новый элемент, копию водяного знака
-$('.workspace__watermark-img')
-    .clone()
-    .prependTo('#workspaceTile')
-    .css({ "display": "inline-block" })
-    .attr('class', 'workspace__watermark-img_tile')
-    .attr('id', 'tileImg');
-
-// Устанавливает число копий водяного знака и помещает их в нужный элемент
-for (var i = 1; i < (w*h)*4 ; i++) {
-  $('#tileImg')
-    .clone()
-    .insertAfter($('#tileImg'));
-}
-
-
 // Позиционирование водяного знака при загрузке страницы и переключениях режимов работы
-var wtPosition = function(toggle){
+var wtPosition = function(){
 
-  if (!toggle) {
+  if (!wtMode.toggle) {
+
+          var wtImg = $('.workspace__watermark-img'),
+              imgWidth = $('.workspace__img').outerWidth(),
+              imgHeight = $('.workspace__img').outerHeight(),
+              w = screen.width/wtImg.outerWidth(),
+              h = screen.height/wtImg.outerHeight();
+
+          // Создает новый элемент-обертку для элемента, содержащего водяные знаки
+          $('<div id="workspaceTileWrapper"></div>')
+              .prependTo('#workspace')
+              .css({"width": imgWidth, "height": imgHeight, "position": "absolute", "overflow": "hidden", "z-index": "1" })
+              .position({top: 0, left: 0});
+
+          // Создает новый элемент для заполнения его копиями водяного знака
+          $('<div id="workspaceTile"></div>')
+              .prependTo('#workspaceTileWrapper')
+              .css({"width": screen.width*2, "height": screen.width*2, "font-size": 0 })
+              .offset({top: 0-screen.width/2, left: 0-screen.width/2});
 
           // Подготовка элементов рабочего пространства
-          $('#workspaceTile').show();
-          $('#workspaceTileWrapper').show();
-          $("#workspaceWt").hide();
-          $('#tileImg')
-              .css({"max-width": imgWidth, "max-height": imgHeight, "display": "inline-block" })
-              .attr('id', 'start');
+          $('.workspace__watermark').hide();
+          $('.workspace__watermark-img').css({"display": "inline-block"});
 
-  } else if (toggle) {
+          // Устанавливает число копий водяного знака и помещает их в нужный элемент
+          for (var i = 1; i < (w*h)*4 ; i++) {
+            $('#workspaceWt')
+              .clone()
+              .prependTo('#workspaceTile')
+              .css({ "position": "relative", "display": "inline-block" })
+              .insertAfter($('#workspaceWt'));
+          }
+
+
+
+  } else if (wtMode.toggle) {
+
+          // Сохранение значений
+          $(".workspace__img").position({top: imgSinglePos.imgY, left: imgSinglePos.imgX })
 
           // Подготовка элементов рабочего пространства
-          $('#workspaceTileWrapper').hide();
-          $('#workspaceTile').hide();
-          $("#workspaceWt").show();
+          $('.workspace__watermark').show().css({"display": "block"});
+          $('#workspaceTileWrapper').remove();
 
           // Центрирование фоновой картинки в рабочей зоне
           $(".workspace__img").position({
@@ -102,30 +103,25 @@ var wtPosition = function(toggle){
             my: "center center",
             at: "center center"
           });
-
-          // Центрирование вотермарка по отношению к фоновой картинке
-          $("#workspaceWt").position({
-            of: $(".workspace__img"),
-            my: "center center",
-            at: "center center"
-          });
-
   }
 };
 
 // Позиционирование водяного знака мышью
-var wtDrag = function(toggle){
-  if (!toggle) {
+var wtDrag = function(){
+  if (!wtMode.toggle) {
 
-          var selectedClass = 'workspace__watermark-img_tile';
-          var $draggableElems = $(".workspace__watermark-img_tile").draggable({
+          // Сохранение значений
+          $(".workspace__watermark").position({top: imgTilePos.imgY, left: imgTilePos.imgX })
+
+          var selectedClass = 'workspace__watermark';
+          var $draggableElems = $(".workspace__watermark").draggable({
             scroll: false,
             start: function(e, ui) {
-              if (e.target.id == "tileImg") $draggableElems.addClass(selectedClass);
+              if (e.target.id == "workspaceWt") $draggableElems.addClass(selectedClass);
               else return false;
             },
             drag: function(e, ui) {
-              if (e.target.id == "tileImg") {
+              if (e.target.id == "workspaceWt") {
                 $('.' + selectedClass).css({
                   top: ui.position.top,
                   left: ui.position.left
@@ -134,7 +130,9 @@ var wtDrag = function(toggle){
             }
           });
 
-  } else if (toggle) {
+  } else if (wtMode.toggle) {
+
+          $(".workspace__watermark").position({top: imgSinglePos.imgY, left: imgSinglePos.imgX })
 
           $("#workspaceWt").draggable({
             containment:".workspace__img",
@@ -142,10 +140,12 @@ var wtDrag = function(toggle){
             scroll: false,
             drag: function(){
               var position = $(this).position(),
-                  imgMarginTop = $(".workspace__img").position().top, // shows distance from workspace__img to workspace
+                  imgMarginTop = $(".workspace__img").position().top,
                   imgMarginLeft = $(".workspace__img").position().left,
                   xPos = position.left,
                   yPos = position.top;
+                  imgSinglePos.imgX = xPos;
+                  imgSinglePos.imgY = yPos;
 
               $("#workspaceWt").attr('data-x', xPos - imgMarginLeft);
               $("#workspaceWt").attr('data-y', yPos - imgMarginTop);
@@ -157,13 +157,17 @@ var wtDrag = function(toggle){
 };
 
 // Позиционирование водяного знака спиннерами и изменение отступов между копиями водяного знака
-var wtSpin = function(toggle){
+var wtSpin = function(){
 
-  if (!toggle) {
+  if (!wtMode.toggle) {
 
-          // Обнуление значений спиннеров
-          $("#spinner-1").spinner( "value", 0 );
-          $("#spinner-2").spinner( "value", 0 );
+          // Сохранение значений
+          $("#spinner-1").spinner( "value", margin.MarginX );
+          $("#spinner-2").spinner( "value", margin.MarginY );
+          $('.workspace__watermark-img').css({ "margin-right": margin.MarginX, "margin-bottom": margin.MarginY });
+          $('.grid__padding-y').css({ "width": 10 + "px" });
+          $('.grid__padding-x').css({ "height": 10 + "px" });
+
 
           // Задает новую логику работы спиннеров
           $("#spinner-1").spinner({
@@ -172,11 +176,10 @@ var wtSpin = function(toggle){
             spin: function(event, ui) {
               $(this).change();
               var x = $(this).spinner('value');
-              $('.workspace__watermark-img_tile').css({ "margin-right": x });
-              $('.grid__padding-y').css({ "height": 10 + x/3.3 + "px" });
+              margin.MarginX = x;
 
-              var marginX = x;
-              return marginX
+              $('.workspace__watermark-img').css({ "margin-right": x });
+              $('.grid__padding-y').css({ "width": 10 + x/3.3 + "px" });
             }
           });
 
@@ -186,20 +189,20 @@ var wtSpin = function(toggle){
             spin: function(event, ui) {
               $(this).change();
               var y = $(this).spinner('value');
-              $('.workspace__watermark-img_tile').css({ "margin-bottom": y });
-              $('.grid__padding-x').css({ "width": 10 + y/3.3 + "px" });
+              margin.MarginY = y;
 
-              var marginY = y;
-              return marginY
+              $('.workspace__watermark-img').css({ "margin-bottom": y });
+              $('.grid__padding-x').css({ "height": 10 + y/3.3 + "px" });
             }
           });
 
-  } else if (toggle) {
+  } else if (wtMode.toggle) {
 
           var imgWidth = $(".workspace__img").outerWidth(),
               watermarkWidth = $("#workspaceWt").outerWidth(true),
               imgHeight = $(".workspace__img").outerHeight(),
               watermarkHeight = $("#workspaceWt").outerHeight(true);
+
 
           $("#spinner-1").spinner({
               min: 0,
@@ -221,17 +224,23 @@ var wtSpin = function(toggle){
                 $("#workspaceWt").css({top: (y + $(".workspace__img").position().top)});
               }
           });
+
+
+          // Обнуление значений
+          $( "#spinner-1" ).spinner( "value", 0 );
+          $( "#spinner-2" ).spinner( "value", 0 );
+          $('.workspace__watermark-img').css({ "margin-right": 0, "margin-bottom": 0 });
   }
 };
 
 //  Позиционирование водяного знака сеткой
-var wtGrid = function(toggle){
-  if (!toggle) {
+var wtGrid = function(){
+  if (!wtMode.toggle) {
 
           // Показывает индикаторы отступа
           $('.grid__padding').show();
 
-  } else if (toggle) {
+  } else if (wtMode.toggle) {
 
           var $workspaceWt = $("#workspaceWt"),
             	$spinnerX = $("#spinner-1"),
@@ -394,10 +403,10 @@ var wtGrid = function(toggle){
 
 module.exports = {
   init: function() {
-    wtPosition(toggle);
-    wtDrag(toggle);
-    wtSpin(toggle);
-    wtGrid(toggle);
+    wtPosition();
+    wtDrag();
+    wtSpin();
+    wtGrid();
   },
   getX: function () {
     return imgX;
@@ -406,12 +415,12 @@ module.exports = {
     return imgY;
   },
   getMode: function () {
-    return wtMode;
+    return wtMode.toggle;
   },
   getMarginX: function () {
-    return marginX;
+    return margin.MarginX;
   },
   getMarginY: function () {
-    return marginY;
+    return margin.MarginY;
   },
 };
