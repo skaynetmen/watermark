@@ -10,8 +10,9 @@ var
 //}
 
 function changeOpasity(event, ui) {
-	var sliderValue = 100 - ui.value,
-  		valueCSS = sliderValue/100;
+	sliderValue = 100 - ui.value;
+
+	var valueCSS = sliderValue / 100;
 
 	$watermark.css("opacity", valueCSS);
 }

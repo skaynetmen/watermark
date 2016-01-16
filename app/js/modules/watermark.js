@@ -19,9 +19,10 @@ var wtMode = {
     };
 
 
-var countX = 0,
+var
+    moduleUpload,
+    countX = 0,
     countY = 0,
-    $workspace = $('#workspace'),
     $workspaceWt = $('#workspaceWt'),
     widthWt = 0,
     heightWt = 0,
@@ -34,11 +35,14 @@ var countX = 0,
     $spinner1 = $('#spinner-1'),
     $spinner2 = $('#spinner-2'),
     spinnerIsInnit = false,
-    workspaceWtWidth = 0;
+    workspaceWtWidth = 0,
+    $gridItem = $('.grid__item');
 
 // Переключает в режим замощения
 $('.mode__link_tile').on('click', function (e) {
     e.preventDefault();
+
+    $workspaceWt.addClass('workspace__watermark_tile');
 
     if (wtMode.toggle) {
         wtMode.toggle = false;
@@ -50,7 +54,7 @@ $('.mode__link_tile').on('click', function (e) {
 
         $('.mode__link_tile').parent().addClass('mode__item_active').siblings().removeClass('mode__item_active');
 
-        $('.grid__item').removeClass('grid__item_active');
+        $gridItem.removeClass('grid__item_active');
     }
 });
 
@@ -58,6 +62,8 @@ $('.mode__link_tile').on('click', function (e) {
 // Переключает в режим одной картинки
 $('.mode__link_single').on('click', function (e) {
     e.preventDefault();
+
+    $workspaceWt.removeClass('workspace__watermark_tile');
 
     if (!wtMode.toggle) {
         wtMode.toggle = true;
@@ -107,10 +113,9 @@ function resetPosition() {
 
         $('.grid__padding-y').css({"width": 10 + "px"});
         $('.grid__padding-x').css({"height": 10 + "px"});
-
+    } else {
+        $gridItem.removeClass('grid__item_active');
     }
-
-    console.log('resetPosition');
 }
 
 
@@ -119,16 +124,15 @@ var wtPosition = function () {
 
     $workspaceWt.css({'left': 0, 'top': 0});
 
-    var factor = $workspace.height() / $('.workspace__img').outerHeight();
+    //var factor = $workspace.height() / $('.workspace__img').outerHeight();
 
     var wtImg = $('.workspace__watermark-img'),
-        imgWidth = $('.workspace__img').outerWidth(),
-        imgHeight = $('.workspace__img').outerHeight(),
-        w = wtImg.outerWidth() / factor,
-        h = wtImg.outerHeight() / factor;
+        h = Math.ceil(moduleUpload.getWatermarkHeight() / moduleUpload.getFactor());
 
     if (!wtMode.toggle) {
-
+        var imgWidth = Math.ceil(moduleUpload.getImgWidth() / moduleUpload.getFactor()),
+            imgHeight = Math.ceil(moduleUpload.getImgHeight() / moduleUpload.getFactor()),
+            w = Math.ceil(moduleUpload.getWatermarkWidth() / moduleUpload.getFactor());
 
 
         //// Создает новый элемент-обертку для элемента, содержащего водяные знаки
@@ -145,13 +149,13 @@ var wtPosition = function () {
         //
         //// Подготовка элементов рабочего пространства
         //$('.workspace__watermark').hide();
-        $('.workspace__watermark-img').css({"display": "inline-block", 'height': h, 'vertical-align': 'top'});
+        wtImg.css({"display": "inline-block", 'width': w, 'height': 'auto', 'vertical-align': 'top'});
         //
         //// Устанавливает число копий водяного знака и помещает их в нужный элемент
 
 
-        countX = Math.floor(imgWidth / w) * 2;
-        countY = Math.floor(imgHeight / h) * 2;
+        countX = Math.ceil(imgWidth / w) * 2;
+        countY = Math.ceil(imgHeight / h) * 2;
 
 
         widthWt = countX * w;
@@ -181,8 +185,8 @@ var wtPosition = function () {
         draggableContainment();
 
     } else if (wtMode.toggle) {
-        $('.workspace__watermark-img').eq(0).removeAttr('style').siblings().remove();
-        $('#workspaceWt').removeAttr('style').css('height', h);
+        wtImg.eq(0).removeAttr('style').siblings().remove();
+        $workspaceWt.removeAttr('style').css('height', h);
 
         // Сохранение значений
         //$(".workspace__img").position({top: imgSinglePos.imgY, left: imgSinglePos.imgX });
@@ -224,6 +228,17 @@ var wtDrag = function () {
                 top: ui.position.top,
                 left: ui.position.left
             });
+
+            //$workspaceWt
+            //    .attr('data-x', positionX)
+            //    .attr('data-y', positionY);
+
+            if (wtMode.toggle) {
+                $spinner1.spinner("value", positionX);
+                $spinner2.spinner("value", positionY);
+            }
+
+            $gridItem.removeClass('grid__item_active');
         }
     });
 
@@ -275,15 +290,26 @@ var wtSpin = function () {
             spin: function (event, ui) {
                 $(this).change();
                 var x = ui.value;
-                margin.MarginX = x;
 
-                widthWt = widthWt + countX;
-                workspaceWidth();
-                x1 = x1 - countX;
-                draggableContainment();
+                if (margin.MarginX !== x) {
+                    if (margin.MarginX > x) {
+                        widthWt = widthWt - (countX + 1);
+                        x1 = x1 + (countX + 1);
 
-                $('.workspace__watermark-img').css({"margin-right": x});
-                $('.grid__padding-y').css({"width": 10 + x / 3.3 + "px"});
+                    } else {
+                        widthWt = widthWt + (countX + 1);
+                        x1 = x1 - (countX + 1);
+                    }
+
+                    margin.MarginX = x;
+
+                    workspaceWidth();
+
+                    draggableContainment();
+
+                    $('.workspace__watermark-img').css({"margin-right": x});
+                    $('.grid__padding-y').css({"width": 10 + x / 3.3 + "px"});
+                }
             }
         });
 
@@ -293,15 +319,25 @@ var wtSpin = function () {
             spin: function (event, ui) {
                 $(this).change();
                 var y = ui.value;
-                margin.MarginY = y;
 
-                heightWt = heightWt + countY;
-                workspaceWidth();
-                y1 = y1 - countY;
-                draggableContainment();
+                if (margin.MarginY !== y) {
+                    if (margin.MarginY > y) {
+                        heightWt = heightWt - (countY + 1);
+                        y1 = y1 + (countY + 1);
+                    } else {
+                        heightWt = heightWt + (countY + 1);
+                        y1 = y1 - (countY + 1);
+                    }
 
-                $('.workspace__watermark-img').css({"margin-bottom": y});
-                $('.grid__padding-x').css({"height": 10 + y / 3.3 + "px"});
+                    margin.MarginY = y;
+
+                    workspaceWidth();
+
+                    draggableContainment();
+
+                    $('.workspace__watermark-img').css({"margin-bottom": y});
+                    $('.grid__padding-x').css({"height": 10 + y / 3.3 + "px"});
+                }
             }
         });
 
@@ -517,8 +553,10 @@ var wtGrid = function () {
 
 
 module.exports = {
-    init: function () {
-        wtPosition();
+    init: function (upload) {
+        moduleUpload = upload;
+
+        //wtPosition();
         wtDrag();
         wtSpin();
         wtGrid();

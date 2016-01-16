@@ -3,8 +3,8 @@
 var
     moduleSlider,
     moduleWatermark,
-    $reset = $('#reset'),
-    $grid = $('.grid__link[data-value="1"]');
+    $reset = $('#reset');
+//$grid = $('.grid__link[data-value="1"]');
 
 /**
  * Делаем эмитацию клика по сетке (1ой ячейке)

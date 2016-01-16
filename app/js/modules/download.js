@@ -14,7 +14,9 @@ var
         factor: 1,
         opacity: 100,
         marginX: 0,
-        marginY: 0
+        marginY: 0,
+        countX: 0,
+        countY: 0
     },
     result;
 
@@ -48,7 +50,6 @@ var options = {
     method: 'post',
     url: '/api/download.php',
     dataType: 'json',
-    data: data,
     success: success,
     error: error
 };
@@ -56,14 +57,16 @@ var options = {
 /**
  * Выполняем ajax запрос
  */
-function ajax() {
+var ajax = function (value) {
+    options.data = value;
+
     $.ajax(options);
-}
+};
 
 /**
  * Получаем данные из модулей для отправки на сервер
  */
-function getData() {
+var getData = function () {
     data.img = moduleUpload.getImgPath() || null;
     data.watermark = moduleUpload.getWatermarkPath() || null;
     data.factor = moduleUpload.getFactor() || 1;
@@ -73,21 +76,20 @@ function getData() {
     data.y = moduleWatermark.getY();
     data.marginX = moduleWatermark.getMarginX();
     data.marginY = moduleWatermark.getMarginY();
+    data.countX = moduleWatermark.getCountX();
+    data.countY = moduleWatermark.getCountY();
 
     data.opacity = moduleSlider.getOpacity();
 
-    ajax();
-}
+    ajax(data);
+};
 
 /**
  * Обрабатываем клик по кнопке скачать
  */
 var init = function () {
     $submit.on('click', function () {
-        if (moduleUpload && moduleUpload.getImgPath() &&
-            moduleWatermark && moduleWatermark.getX() &&
-            moduleSlider && moduleSlider.getOpacity()
-        ) {
+        if (moduleUpload && moduleWatermark && moduleSlider) {
             getData();
         }
     });

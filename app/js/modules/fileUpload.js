@@ -18,32 +18,43 @@ var
     $workspaceImg = $('.workspace__img'),
     $workspaceWatermark = $('.workspace__watermark-img'),
     successUploadImg,
-    successUploadWatermark;
+    successUploadWatermark,
+    firstUploadImg = true;
 
 
 /**
  * После загрузки исходного изображения задаем высоту обертке и считаем во сколько раз уменьшилось изображение
  */
-var afterUploadImg = function () {
-    var imgHeightOnWorkspace = $workspaceImg.outerHeight(true);
+function afterUploadImg() {
+    if (!firstUploadImg) {
+        $workspace.removeAttr('style');
+    }
 
-    //если изображение на рабочей области меньше чем на самом деле, считаем во сколько раз оно уменьшилось
+    var imgHeightOnWorkspace = $workspaceImg.outerHeight(true),
+        imgWidthOnWorkspace = $workspaceImg.outerWidth(true);
+
+    //если изображение на рабочей облости меньше чем на самом деле, считаем во сколько раз оно уменьшилось
     if (imgHeight > imgHeightOnWorkspace) {
         factor = imgHeight / imgHeightOnWorkspace;
     }
 
     //для центрирования по вертикали задаем высоту рабочей облости
-    $workspace.css('height', imgHeightOnWorkspace);
+    $workspace.css({
+        'width': imgWidthOnWorkspace,
+        'height': imgHeightOnWorkspace
+    });
 
     if (typeof successUploadImg == 'function') {
         successUploadImg.call();
     }
-};
+
+    firstUploadImg = false;
+}
 
 /**
  * Загружаем картинку на рабочую область
  */
-var addImgToWorkspace = function () {
+function addImgToWorkspace() {
     var image = new Image();
 
     image.src = imagePath;
@@ -56,7 +67,7 @@ var addImgToWorkspace = function () {
 
         afterUploadImg();
     };
-};
+}
 
 /**
  * Колбек загрузки исходного изображения
@@ -101,7 +112,7 @@ var uploadImgOptions = {
 /**
  * Масшабируем водяной знак после загрузки
  */
-var afterUploadWatermark = function () {
+function afterUploadWatermark() {
     var height = watermarkHeight / factor;
 
     $workspaceWatermark.css('height', height);
@@ -114,7 +125,7 @@ var afterUploadWatermark = function () {
 /**
  * Загружаем картинку на рабочую область
  */
-var addWatermarkToWorkspace = function () {
+function addWatermarkToWorkspace() {
     var image = new Image();
 
     image.src = watermarkPath;
@@ -127,7 +138,7 @@ var addWatermarkToWorkspace = function () {
 
         afterUploadWatermark();
     };
-};
+}
 
 /**
  * Колбек загрузки водяного знака
@@ -174,28 +185,28 @@ var init = function () {
  */
 var fakeFileInput = function () {
     var triggerImg = function () {
-        $uploadImg.trigger('click');
+        $('#uploadImg').trigger('click');
     };
 
     $fakeInputImg.on('click', triggerImg);
     $buttonUploadImg.on('click', triggerImg);
 
     var updateValueImg = function () {
-        $fakeInputImg.val($uploadImg.val().replace("C:\\fakepath\\", ""));
+        $fakeInputImg.val($uploadImg.val());
     };
 
     $uploadImg.on('change', updateValueImg);
 
     //------------ watermark -------------
     var triggerWatermark = function () {
-        $uploadWatermark.trigger('click');
+        $('#uploadWatermark').trigger('click');
     };
 
     $fakeInputWatermark.on('click', triggerWatermark);
     $buttonUploadWatermark.on('click', triggerWatermark);
 
     var updateValueWatermark = function () {
-        $fakeInputWatermark.val($uploadWatermark.val().replace("C:\\fakepath\\", ""));
+        $fakeInputWatermark.val($uploadWatermark.val());
     };
 
     $uploadWatermark.on('change', updateValueWatermark);
