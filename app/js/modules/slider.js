@@ -30,9 +30,9 @@ var slider = function() {
 
 var setOpacity = function (value) {
     var value = parseInt(value);
-        opacity = value;
+        sliderValue = value;
 
-    $watermark.css('opacity', opacity / 100);
+    $watermark.css('opacity', value / 100);
     $slider.slider('value', value);
 };
 
