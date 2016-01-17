@@ -20,8 +20,10 @@ var
     successUploadImg,
     successUploadWatermark,
     firstUploadImg = true,
+    firstUploadWatermark = true,
     moduleAlert,
-    modulePreloader;
+    modulePreloader,
+    moduleWatermark;
 
 
 /**
@@ -30,6 +32,7 @@ var
 function afterUploadImg() {
     if (!firstUploadImg) {
         $workspace.removeAttr('style');
+        moduleWatermark.reCalc();
     }
 
     var imgHeightOnWorkspace = $workspaceImg.outerHeight(true),
@@ -46,7 +49,7 @@ function afterUploadImg() {
         'height': imgHeight / factor
     });
 
-    if (typeof successUploadImg == 'function') {
+    if (firstUploadImg && typeof successUploadImg == 'function') {
         successUploadImg.call();
     }
 
@@ -123,13 +126,23 @@ var uploadImgOptions = {
  * Масшабируем водяной знак после загрузки
  */
 function afterUploadWatermark() {
-    var height = watermarkHeight / factor;
+    var height = watermarkHeight / factor,
+        width = watermarkWidth / factor;
 
-    $workspaceWatermark.css('height', height);
+    $('.workspace__watermark-img').css({
+        'width': width,
+        'height': height
+    });
 
-    if (typeof successUploadWatermark == 'function') {
+    if (!firstUploadWatermark) {
+        moduleWatermark.reCalc();
+    }
+
+    if (firstUploadWatermark && typeof successUploadWatermark == 'function') {
         successUploadWatermark.call();
     }
+
+    firstUploadWatermark = false;
 
     modulePreloader.hide();
 }
@@ -146,7 +159,9 @@ function addWatermarkToWorkspace() {
         watermarkWidth = image.width;
         watermarkHeight = image.height;
 
-        $workspaceWatermark.attr('src', watermarkPath);
+        $('.workspace__watermark-img').each(function () {
+            $(this).attr('src', watermarkPath)
+        });
 
         afterUploadWatermark();
     };
@@ -229,9 +244,10 @@ var fakeFileInput = function () {
 
 
 module.exports = {
-    init: function (alert, preloader) {
+    init: function (alert, preloader, watermark) {
         moduleAlert = alert;
         modulePreloader = preloader;
+        moduleWatermark = watermark;
 
         fakeFileInput();
         init();

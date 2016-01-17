@@ -74,7 +74,7 @@ var getData = function () {
     data.watermark = moduleUpload.getWatermarkPath() || null;
     data.factor = moduleUpload.getFactor() || 1;
 
-    data.tiling = moduleWatermark.getMode();
+    data.tiling = !moduleWatermark.getMode();
     data.x = moduleWatermark.getX();
     data.y = moduleWatermark.getY();
     data.marginX = moduleWatermark.getMarginX();

@@ -18,6 +18,8 @@ function reset() {
     if (moduleSlider && typeof moduleSlider.setOpacity == 'function') {
         moduleSlider.setOpacity(100);
     }
+
+    $(window).trigger('resize');
 }
 
 /**
