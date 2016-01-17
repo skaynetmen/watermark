@@ -19,7 +19,9 @@ var
     $workspaceWatermark = $('.workspace__watermark-img'),
     successUploadImg,
     successUploadWatermark,
-    firstUploadImg = true;
+    firstUploadImg = true,
+    moduleAlert,
+    modulePreloader;
 
 
 /**
@@ -49,6 +51,8 @@ function afterUploadImg() {
     }
 
     firstUploadImg = false;
+
+    modulePreloader.hide();
 }
 
 /**
@@ -80,11 +84,12 @@ var doneImg = function (e, data) {
             imagePath = file.url;
             addImgToWorkspace();
         } else {
-            $.ajax({
-                type: file.deleteType,
-                url: file.deleteUrl
-            });
-            alert('Загруженный файл не является изображением!');
+            //$.ajax({
+            //    type: file.deleteType,
+            //    url: file.deleteUrl
+            //});
+            moduleAlert.danger('Загруженный файл не является изображением!');
+            modulePreloader.hide();
         }
     });
 };
@@ -98,6 +103,10 @@ var progressall = function (e, data) {
     var progress = parseInt(data.loaded / data.total * 100, 10);
 };
 
+var showPreloader = function () {
+    modulePreloader.show();
+};
+
 /**
  * Настройки плагина fileupload для исходного изображения
  * @type {{url: string, dataType: string, done: doneImg, progressall: progressall}}
@@ -106,7 +115,8 @@ var uploadImgOptions = {
     url: '/api/upload.php',
     dataType: 'json',
     done: doneImg,
-    progressall: progressall
+    progressall: progressall,
+    change: showPreloader
 };
 
 /**
@@ -120,7 +130,9 @@ function afterUploadWatermark() {
     if (typeof successUploadWatermark == 'function') {
         successUploadWatermark.call();
     }
-};
+
+    modulePreloader.hide();
+}
 
 /**
  * Загружаем картинку на рабочую область
@@ -151,11 +163,12 @@ var doneWatermark = function (e, data) {
             watermarkPath = file.url;
             addWatermarkToWorkspace();
         } else {
-            $.ajax({
-                type: file.deleteType,
-                url: file.deleteUrl
-            });
-            alert('Загруженный файл не является изображением!');
+            //$.ajax({
+            //    type: file.deleteType,
+            //    url: file.deleteUrl
+            //});
+            moduleAlert.danger('Загруженный файл не является изображением!');
+            modulePreloader.hide();
         }
     });
 };
@@ -168,7 +181,8 @@ var uploadWatermarkOptions = {
     url: '/api/upload.php',
     dataType: 'json',
     done: doneWatermark,
-    progressall: progressall
+    progressall: progressall,
+    change: showPreloader
 };
 
 /**
@@ -215,7 +229,10 @@ var fakeFileInput = function () {
 
 
 module.exports = {
-    init: function () {
+    init: function (alert, preloader) {
+        moduleAlert = alert;
+        modulePreloader = preloader;
+
         fakeFileInput();
         init();
     },

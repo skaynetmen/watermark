@@ -20,6 +20,7 @@ function changeOpasity(event, ui) {
 var slider = function() {
 
 	$slider.slider({
+		range: 'min',
 	  	min: 0,
 	  	max: 100,
 	  	step: 1,

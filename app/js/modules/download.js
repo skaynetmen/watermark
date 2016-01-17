@@ -4,6 +4,7 @@ var
     moduleUpload,
     moduleWatermark,
     moduleSlider,
+    moduleAlert,
     $submit = $('#submit'),
     data = {
         tiling: false,
@@ -29,9 +30,11 @@ var success = function (data) {
     if (!data.error) {
         result = data.result;
 
+        Cookies.set('resultImg', data.result);
+
         window.location.replace(data.result)
     } else {
-        alert(data.msg);
+        moduleAlert.danger(data.msg);
     }
 };
 
@@ -39,7 +42,7 @@ var success = function (data) {
  * Обрабатываем неудачное подключение к серверу
  */
 var error = function () {
-    alert('Не удалось подключиться к серверу!');
+    moduleAlert.danger('Не удалось подключиться к серверу!');
 };
 
 /**
@@ -96,10 +99,11 @@ var init = function () {
 };
 
 module.exports = {
-    init: function (upload, watermark, slider) {
+    init: function (upload, watermark, slider, alert) {
         moduleUpload = upload;
         moduleWatermark = watermark;
         moduleSlider = slider;
+        moduleAlert = alert;
 
         init();
     },

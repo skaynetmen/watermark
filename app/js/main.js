@@ -5,13 +5,15 @@ var
 	slider = require('./modules/slider.js'),
 	watermark = require('./modules/watermark.js'),
 	reset = require('./modules/reset.js'),
-	download = require('./modules/download.js');
+	download = require('./modules/download.js'),
+	preloader = require('./modules/preloader.js'),
+	alert = require('./modules/alert.js');
 
 $(document).ready(function(){
 	var $disabler = $('#disabler');
 
 	//Запускаем модуль загрузки файлов
-	fileUpload.init();
+	fileUpload.init(alert, preloader);
 
 	//После успешной загрузки изображения разблокируем загрузку водяного знака
 	fileUpload.setSuccessUploadImg(function () {
@@ -24,7 +26,7 @@ $(document).ready(function(){
 		$disabler.fadeOut();
 		watermark.init(fileUpload);
 		slider.init();
-		download.init(fileUpload, watermark, slider);
+		download.init(fileUpload, watermark, slider, alert);
 		reset.init(slider, watermark);
 	});
 
@@ -34,8 +36,11 @@ $(document).ready(function(){
 	//Запускаем модуль шаринга в соц сетях
 	socialSharing.init();
 
+	//Запускаем модуль алертов
+	alert.init();
+
 	//Просто для видимости объектов
 	$('#spinner-1').spinner();
 	$('#spinner-2').spinner();
-	$('#slider').slider();
+	$('#slider').slider({range: 'min'});
 });
