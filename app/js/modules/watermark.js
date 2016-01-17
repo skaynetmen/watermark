@@ -98,7 +98,7 @@ function workspaceWidth() {
 }
 
 function draggableContainment() {
-    console.log(x1, y1, x2, y2);
+    //console.log(x1, y1, x2, y2);
     $workspaceWt.draggable("option", "containment", [x1, y1, x2, y2]);
 }
 
@@ -155,7 +155,7 @@ function reCalcCoordinatesLimit() {
             x2 = offset.left;
             y2 = offset.top;
 
-            console.log(offset);
+            //console.log(offset);
 
             draggableContainment();
         }
