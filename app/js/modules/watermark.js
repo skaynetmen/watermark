@@ -36,7 +36,8 @@ var
     $spinner2 = $('#spinner-2'),
     spinnerIsInnit = false,
     workspaceWtWidth = 0,
-    $gridItem = $('.grid__item');
+    $gridItem = $('.grid__item'),
+    $checkCenter = $('#checkCenter');
 
 // Переключает в режим замощения
 $('.mode__link_tile').on('click', function (e) {
@@ -55,6 +56,8 @@ $('.mode__link_tile').on('click', function (e) {
         $('.mode__link_tile').parent().addClass('mode__item_active').siblings().removeClass('mode__item_active');
 
         $gridItem.removeClass('grid__item_active');
+
+        $checkCenter.prop('disabled', true);
     }
 });
 
@@ -76,6 +79,8 @@ $('.mode__link_single').on('click', function (e) {
         $('#workspaceWt').draggable("option", "containment", "parent");
 
         $('.mode__link_single').parent().addClass('mode__item_active').siblings().removeClass('mode__item_active');
+
+        $checkCenter.prop('disabled', false);
     }
 });
 
@@ -413,7 +418,7 @@ var wtGrid = function () {
                     x = 0,
                     y = 0;
 
-                if ($('#checkCenter').prop('checked')) {
+                if ($checkCenter.prop('checked')) {
                     // Позиционирование в центре каждой ячейки сетки
                     switch (gridNumber) {
                         case 1:
