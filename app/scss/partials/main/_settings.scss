@@ -397,6 +397,8 @@
     background-color: #dbe1e8;
     @include border-radius(50%);
     z-index: 2;
+    outline: none;
+    cursor: move;
 
     &:before {
       position: absolute;
@@ -412,6 +414,11 @@
       background-color: #9eb2c0;
       @include border-radius(50%);
     }
+  }
+
+  .ui-slider-range {
+    height: 100%;
+    background-color: #9eb2c0;
   }
 }
 
@@ -482,7 +489,7 @@
   background-color: #625659;
   opacity: 0.2;
   z-index: 3;
-  transition: height 1s ease;
+  transition: height .3s ease;
 }
 
 .disable-watermark {

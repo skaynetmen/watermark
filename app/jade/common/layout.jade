@@ -25,7 +25,6 @@ html(class='no-js', lang='ru-RU')
         link(rel="icon", type='image/png', sizes="96x96", href="favicon-96x96.png")
         link(rel="icon", type='image/png', sizes="32x32", href="favicon-32x32.png")
         link(rel="icon", type='image/png', sizes="16x16", href="favicon.png")
-        //link(rel="stylesheet" type='text/css' href="bower/jquery-ui/themes/base/jquery-ui.css")
         //build:css css/main.min.css
         link(rel="stylesheet", href="bower/normalize-css/normalize.css")
         link(rel="stylesheet", href="css/main.css")
@@ -33,6 +32,8 @@ html(class='no-js', lang='ru-RU')
     body.bg
         .wrapper
             main.main
+                #msg
+
                 .container
                     block content
 
@@ -44,9 +45,9 @@ html(class='no-js', lang='ru-RU')
         script(src="bower/blueimp-file-upload/js/jquery.iframe-transport.js")
         script(src="bower/blueimp-file-upload/js/jquery.fileupload.js")
         script(src="js/vendor/jquery.localize.min.js")
+        script(src="bower/js-cookie/src/js.cookie.js")
         //endbuild
         //build:js js/bundle.min.js
         script(src='js/bundle.js')
         //endbuild
         script(src="https://yastatic.net/share2/share.js")
-        //script(src='js/dev.js')
