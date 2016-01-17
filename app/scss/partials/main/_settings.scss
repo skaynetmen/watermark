@@ -156,6 +156,7 @@
 
 .settings__wrapper {
   @extend %clearfix;
+  margin-bottom: 5px;
 }
 
 .settings__label {
@@ -380,6 +381,19 @@
   color: #444a53;
   text-align: center;
 }
+
+/* Centered */
+
+.grid-checkbox {
+  font-size: em(12);
+  line-height: 14px;
+}
+
+.grid-checkbox__label {
+  margin-left: 5px;
+}
+
+/* Slider */
 
 .slider {
   position: relative;
