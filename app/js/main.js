@@ -16,7 +16,7 @@ $(document).ready(function(){
 	var $disabler = $('#disabler');
 
 	//Запускаем модуль загрузки файлов
-	fileUpload.init(alert, preloader);
+	fileUpload.init(alert, preloader, watermark);
 
 	//После успешной загрузки изображения разблокируем загрузку водяного знака
 	fileUpload.setSuccessUploadImg(function () {
@@ -27,8 +27,8 @@ $(document).ready(function(){
 	//и запускаем модуль положения, слайдера, загрузки и сброса
 	fileUpload.setSuccessUploadWatermark(function () {
 		$disabler.fadeOut();
-		watermark.init(fileUpload);
 		slider.init();
+		watermark.init(fileUpload, slider);
 		download.init(fileUpload, watermark, slider, alert);
 		reset.init(slider, watermark);
 	});

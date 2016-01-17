@@ -21,8 +21,10 @@ var wtMode = {
 
 var
     moduleUpload,
+    moduleSlider,
     countX = 0,
     countY = 0,
+    $workspace = $('#workspace'),
     $workspaceWt = $('#workspaceWt'),
     widthWt = 0,
     heightWt = 0,
@@ -58,6 +60,8 @@ $('.mode__link_tile').on('click', function (e) {
         $gridItem.removeClass('grid__item_active');
 
         $checkCenter.prop('disabled', true);
+
+        moduleSlider.setOpacity(100);
     }
 });
 
@@ -81,6 +85,8 @@ $('.mode__link_single').on('click', function (e) {
         $('.mode__link_single').parent().addClass('mode__item_active').siblings().removeClass('mode__item_active');
 
         $checkCenter.prop('disabled', false);
+
+        moduleSlider.setOpacity(100);
     }
 });
 
@@ -92,6 +98,7 @@ function workspaceWidth() {
 }
 
 function draggableContainment() {
+    console.log(x1, y1, x2, y2);
     $workspaceWt.draggable("option", "containment", [x1, y1, x2, y2]);
 }
 
@@ -123,11 +130,45 @@ function resetPosition() {
     }
 }
 
+function reCalc() {
+    if (!wtMode.toggle) {
+        $('.mode__link_single').trigger('click');
+        $('.mode__link_tile').trigger('click');
+    } else {
+        $('.mode__link_tile').trigger('click');
+        $('.mode__link_single').trigger('click');
+    }
+}
+
+function reCalcCoordinatesLimit() {
+    $(window).resize(function () {
+        if (!wtMode.toggle) {
+            var imgWidth = Math.ceil(moduleUpload.getImgWidth() / moduleUpload.getFactor()),
+                imgHeight = Math.ceil(moduleUpload.getImgHeight() / moduleUpload.getFactor());
+
+            var offset = $('#workspace').offset();
+
+            x1 = offset.left - (widthWt - imgWidth);
+
+            y1 = offset.top - (heightWt - imgHeight);
+
+            x2 = offset.left;
+            y2 = offset.top;
+
+            console.log(offset);
+
+            draggableContainment();
+        }
+    });
+}
+
 
 // Позиционирование водяного знака при загрузке страницы и переключениях режимов работы
 var wtPosition = function () {
 
     $workspaceWt.css({'left': 0, 'top': 0});
+    positionX = 0;
+    positionY = 0;
 
     //var factor = $workspace.height() / $('.workspace__img').outerHeight();
 
@@ -560,13 +601,15 @@ var wtGrid = function () {
 
 
 module.exports = {
-    init: function (upload) {
+    init: function (upload, slider) {
         moduleUpload = upload;
+        moduleSlider = slider;
 
         //wtPosition();
         wtDrag();
         wtSpin();
         wtGrid();
+        reCalcCoordinatesLimit();
     },
     getX: function () {
         return positionX;
@@ -589,7 +632,6 @@ module.exports = {
     getCountY: function () {
         return countY;
     },
-    resetPosition: function () {
-        resetPosition();
-    }
+    resetPosition: resetPosition,
+    reCalc: reCalc
 };
