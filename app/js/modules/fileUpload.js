@@ -37,13 +37,13 @@ function afterUploadImg() {
 
     //если изображение на рабочей облости меньше чем на самом деле, считаем во сколько раз оно уменьшилось
     if (imgHeight > imgHeightOnWorkspace) {
-        factor = imgHeight / imgHeightOnWorkspace;
+        factor = Math.ceil(imgHeight / imgHeightOnWorkspace);
     }
 
     //для центрирования по вертикали задаем высоту рабочей облости
     $workspace.css({
-        'width': imgWidthOnWorkspace,
-        'height': imgHeightOnWorkspace
+        'width': imgWidth / factor,
+        'height': imgHeight / factor
     });
 
     if (typeof successUploadImg == 'function') {
