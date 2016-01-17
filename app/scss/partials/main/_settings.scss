@@ -1,0 +1,511 @@
+.settings {
+  position: relative;
+  width: $container-width - 702;
+  height: 100%;
+  float: left;
+  background-color: #f1f1f5;
+  border-left: 1px solid #7c7673;
+}
+
+.settings__title {
+  padding: 30px 10px 40px;
+  margin: 0;
+  font-size: em(26);
+  line-height: 28px;
+  text-align: center;
+}
+
+.settings__section {
+  position: relative;
+  padding: 5px 18px 30px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f4c3c2;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 9px solid transparent;
+    border-top-color: #f1f1f5;
+    z-index: 1;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #f4c3c2;
+  }
+}
+
+/* Формы */
+
+.form {
+  &:last-child .form__section {
+    margin-bottom: 0;
+  }
+
+  ::-webkit-input-placeholder {
+    font-size: em(12);
+    color: #9eb2c0;
+  }
+
+  ::-moz-placeholder {
+    font-size: em(12);
+    color: #9eb2c0;
+  }
+
+  :-ms-input-placeholder {
+    font-size: em(12);
+    color: #9eb2c0;
+  }
+}
+
+.form__section {
+  margin-bottom: 25px;
+}
+
+.form__label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: em(14);
+  line-height: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.form__upload-group {
+  display: table;
+
+  .form__input {
+    width: 100%;
+    display: table-cell;
+    @include border-radius(4px 0 0 4px);
+  }
+
+  .form__btn {
+    @include border-radius(0 4px 4px 0);
+  }
+}
+
+.form__input {
+  height: 27px;
+  padding: 0 5px;
+  background-color: #f1f1f5;
+  border: 1px solid #9eb2c0;
+  border-right-width: 0;
+  @include border-radius(4px);
+
+  font-size: em(14);
+  color: #9eb2c0;
+  line-height: 25px;
+
+  &:focus {
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.form__upload-group-btn {
+  display: table-cell;
+  vertical-align: bottom;
+  width: 1%;
+}
+
+.form__btn {
+  height: 27px;
+  padding: 0 9px;
+  background-color: $red;
+  border: none;
+  @include border-radius(4px);
+
+  &:hover {
+    background-color: darken($red, 10%);
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &:active {
+    background-color: darken($red, 5%);
+  }
+}
+
+.icon-cloud {
+  display: inline-block;
+  @include get-sprite($icons-sprite, 'cloud');
+}
+
+/* Положение */
+
+.settings__wrapper {
+  @extend %clearfix;
+  margin-bottom: 5px;
+}
+
+.settings__label {
+  display: block;
+  margin-bottom: 30px;
+  font-size: em(14);
+  line-height: 16px;
+}
+
+.mode {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+
+.mode__list {
+  list-style: none;
+  margin-top: 0;
+  padding-left: 0;
+  font-size: 0;
+}
+
+.mode__item {
+  display: inline-block;
+  margin-left: 10px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.mode__item_active .mode__link_single {
+  @include get-sprite($icons-sprite, 'single-mode-hover');
+}
+
+.mode__item_active .mode__link_tile {
+  @include get-sprite($icons-sprite, 'tile-mode-hover');
+}
+
+.mode__link {
+  display: block;
+  text-decoration: none;
+}
+
+.mode__link_single {
+  @include get-sprite($icons-sprite, 'single-mode');
+
+  &:hover {
+    @include get-sprite($icons-sprite, 'single-mode-hover');
+  }
+}
+
+.mode__link_tile {
+  @include get-sprite($icons-sprite, 'tile-mode');
+
+  &:hover {
+    @include get-sprite($icons-sprite, 'tile-mode-hover');
+  }
+}
+
+.grid {
+  width: 50%;
+  float: left;
+}
+
+.grid__wrapper {
+  position: relative;
+  width: 103px;
+  height: 103px;
+}
+
+.grid__list {
+  display: block;
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0;
+  border: 1px solid #9eb2c0;
+
+  @include border-radius(4px);
+
+  @extend %clearfix;
+}
+
+.grid__item {
+  display: block;
+  float: left;
+
+  &:first-child .grid__link {
+    @include border-radius(4px 0 0 0);
+    border: 0;
+  }
+
+  &:last-child .grid__link {
+    @include border-radius(0 0 4px 0);
+  }
+
+  &:nth-child(2) .grid__link {
+    border-top-width: 0;
+  }
+
+  &:nth-child(3) .grid__link {
+    @include border-radius(0 4px 0 0);
+    border-top-width: 0;
+  }
+
+  &:nth-child(4) .grid__link {
+    border-left-width: 0;
+  }
+
+  &:nth-child(7) .grid__link {
+    @include border-radius(0 0 0 4px);
+    border-left-width: 0;
+  }
+}
+
+.grid__item_active .grid__link {
+  background-color: #f97e76;
+}
+
+.grid__link {
+  $size: 101px/3;
+
+  display: block;
+  width: $size;
+  height: $size;
+  background-color: #dbe1e8;
+  border-top: 1px solid #9eb2c0;
+  border-left: 1px solid #9eb2c0;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: darken(#dbe1e8, 10%);
+  }
+}
+
+.grid__padding {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grid__padding-x,
+.grid__padding-y {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: $red;
+}
+
+.grid__padding-x {
+  width: 100%;
+}
+
+.grid__padding-y {
+  height: 100%;
+}
+
+/* Спиннеры */
+
+.spinners {
+  @extend .grid;
+
+  .ui-spinner-button {
+    position: absolute;
+    display: block;
+    right: 0;
+    overflow: hidden;
+    text-indent: 9999px;
+    cursor: pointer;
+  }
+
+  .ui-spinner-up {
+    top: 5px;
+    @include get-sprite($icons-sprite, 'arrow-up');
+
+    &:hover {
+      @include get-sprite($icons-sprite, 'arrow-up-hover');
+    }
+  }
+
+  .ui-spinner-down {
+    bottom: 5px;
+    @include get-sprite($icons-sprite, 'arrow-down');
+
+    &:hover {
+      @include get-sprite($icons-sprite, 'arrow-down-hover');
+    }
+  }
+}
+
+.spinners__x,
+.spinners__y {
+  position: relative;
+  width: 85px;
+  float: right;
+}
+
+.spinners__x {
+  margin-bottom: 11px;
+}
+
+.spinners__label {
+  display: inline-block;
+}
+
+.spinners__input {
+  display: inline-block;
+  vertical-align: middle;
+  width: 46px;
+  height: 45px;
+  padding: 0 3px;
+  margin-left: 5px;
+  background-color: #f1f1f5;
+  border: 1px solid #9eb2c0;
+  border-radius: 2px;
+  color: #444a53;
+  text-align: center;
+}
+
+/* Centered */
+
+.grid-checkbox {
+  font-size: em(12);
+  line-height: 14px;
+}
+
+.grid-checkbox__label {
+  margin-left: 5px;
+}
+
+/* Slider */
+
+.slider {
+  position: relative;
+  height: 3px;
+  background-color: #dbe1e8;
+  z-index: 1;
+
+  .ui-slider-handle {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+    background-color: #dbe1e8;
+    @include border-radius(50%);
+    z-index: 2;
+    outline: none;
+    cursor: move;
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 8px;
+      height: 8px;
+      background-color: #9eb2c0;
+      @include border-radius(50%);
+    }
+  }
+
+  .ui-slider-range {
+    height: 100%;
+    background-color: #9eb2c0;
+  }
+}
+
+.settings__footer {
+  position: absolute;
+  bottom: 0;
+  padding: 25px 10px;
+  width: 100%;
+
+  @extend %clearfix;
+}
+
+.settings__footer-left {
+  width: 50%;
+  float: left;
+  text-align: left;
+}
+
+.settings__footer-right {
+  @extend .settings__footer-left;
+  text-align: right;
+}
+
+.settings__btn {
+  width: 99px;
+  padding: 10px;
+  background-color: #c1cfd9;
+  border: 0;
+  @include border-radius(4px);
+
+  font-family: 'robotomedium', sans-serif;
+  color: #ffffff;
+
+  &:hover {
+    background-color: darken(#c1cfd9, 10%);
+  }
+
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+
+  &:active {
+    background-color: darken(#c1cfd9, 5%);
+
+  }
+}
+
+.settings__btn_red {
+  background-color: $red;
+
+  &:hover {
+    background-color: darken($red, 10%);
+  }
+
+  &:active {
+    background-color: darken($red, 5%);
+  }
+}
+
+.disable-settings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 406px;
+  background-color: #625659;
+  opacity: 0.2;
+  z-index: 3;
+  transition: height .3s ease;
+}
+
+.disable-watermark {
+  height: 496px;
+}

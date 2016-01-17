@@ -1,0 +1,12 @@
+.generator {
+  @extend %clearfix;
+
+  width: 100%;
+  height: 670px;
+
+  margin-bottom: 25px;
+
+}
+
+@import "main/desktop";
+@import "main/settings";
