@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Watermark by skaynetmen</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Watermark</h1>
+        <h2>Graduation project Loftschool.com</h2>
+        <a href="https://github.com/skaynetmen/watermark" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="watermark" class="anchor" href="#watermark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Watermark</h1>
+
+<p>Graduation project Loftschool.com.</p>
+
+<h2>
+<a id="add-custom-watermark-to-photos-its-easy" class="anchor" href="#add-custom-watermark-to-photos-its-easy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add custom watermark to photos, it`s easy.</h2>
+
+<p><img src="http://wt.alskr.ru/project.png" alt="Project"></p>
+
+<h3>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h3>
+
+<ul>
+<li>Upload source image</li>
+<li>Upload image for watermark</li>
+<li>Change watermark position and opacity if it necessary</li>
+<li>Finish. Download the result</li>
+</ul>
+
+<h3>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h3>
+
+<ul>
+<li>node.js - evented I/O for the backend</li>
+<li>bower - a package manager for the web</li>
+<li>gulp - Automate and enhance your workflow</li>
+<li>browserify - lets you require('modules') in the browser by bundling up all of your dependencies</li>
+<li>jade - node template engine</li>
+<li>ruby - a dynamic, open source programming language with a focus on simplicity and productivity</li>
+<li>sass - is the most mature, stable, and powerful professional grade CSS extension language in the world</li>
+<li>compass - is an open-source CSS Authoring Framework</li>
+<li>php &gt;=5.4 with Imagick - Hypertext Preprocessor</li>
+<li>composer - dependency Manager for PHP</li>
+</ul>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ git clone https://github.com/skaynetmen/watermark.git watermark
+$ <span class="pl-c1">cd</span> watermark
+$ npm install
+$ bower install</pre></div>
+
+<h4>
+<a id="production" class="anchor" href="#production" aria-hidden="true"><span class="octicon octicon-link"></span></a>Production</h4>
+
+<div class="highlight highlight-source-shell"><pre>$ gulp build
+$ <span class="pl-c1">cd</span> dist</pre></div>
+
+<p>Copy dist on your web-server, then:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ composer install
+$ mkdir -p app/uploads/results</pre></div>
+
+<h4>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h4>
+
+<div class="highlight highlight-source-shell"><pre>$ gulp jade
+$ gulp sass
+$ gulp scripts
+$ gulp</pre></div>
+
+<p>Or wia php</p>
+
+<div class="highlight highlight-source-shell"><pre>$ <span class="pl-c1">cd</span> app/
+$ php -S 127.0.0.1:9000</pre></div>
+
+<p>Then open your browser, http://localhost:9000</p>
+
+<h3>
+<a id="project-tree" class="anchor" href="#project-tree" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project tree</h3>
+
+<div class="highlight highlight-source-shell"><pre>└───app
+    ├───api
+    ├───css
+    ├───fonts
+    ├───img
+    │   └───icons
+    ├───jade
+    │   ├───common
+    │   └───partials
+    ├───js
+    │   ├───modules
+    │   └───vendor
+    ├───scss
+    │   ├───common
+    │   └───partials
+    └───uploads</pre></div>
+
+<h3>
+<a id="developer" class="anchor" href="#developer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developer</h3>
+
+<ul>
+<li>Alexandr Skrylev <a href="https://github.com/skaynetmen">skaynetmen</a> teamleader, git, code review, markup, js, php, testing</li>
+<li>Dmytro Kryshtopa <a href="https://github.com/kryshtopa">kryshtopa</a> js</li>
+<li>Vadim Novash <a href="https://github.com/stakeout">stakeout</a> js</li>
+<li>Kanat Sadykov <a href="https://github.com/kAn13">kAn13</a> js</li>
+<li>Alexandra Veyt <a href="https://github.com/AlexWeit">AlexWeit</a> js</li>
+<li>Zoryana Petrova  <a href="https://github.com/zoryana-petrova">zoryana-petrova</a> php</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/skaynetmen/watermark/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/skaynetmen/watermark/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/skaynetmen/watermark"></a> is maintained by <a href="https://github.com/skaynetmen">skaynetmen</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
