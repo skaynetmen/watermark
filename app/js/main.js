@@ -10,6 +10,9 @@ var
 	alert = require('./modules/alert.js');
 
 $(document).ready(function(){
+	//Запускаем модуль локализации
+	ruEng.init();
+
 	var $disabler = $('#disabler');
 
 	//Запускаем модуль загрузки файлов
@@ -29,9 +32,6 @@ $(document).ready(function(){
 		download.init(fileUpload, watermark, slider, alert);
 		reset.init(slider, watermark);
 	});
-
-	//Запускаем модуль локализации
-	ruEng.init();
 
 	//Запускаем модуль шаринга в соц сетях
 	socialSharing.init();

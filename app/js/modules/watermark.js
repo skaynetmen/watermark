@@ -293,12 +293,12 @@ var wtSpin = function () {
 
                 if (margin.MarginX !== x) {
                     if (margin.MarginX > x) {
-                        widthWt = widthWt - (countX + 1);
-                        x1 = x1 + (countX + 1);
+                        widthWt = widthWt - countX;
+                        x1 = x1 + countX;
 
                     } else {
-                        widthWt = widthWt + (countX + 1);
-                        x1 = x1 - (countX + 1);
+                        widthWt = widthWt + countX;
+                        x1 = x1 - countX;
                     }
 
                     margin.MarginX = x;
@@ -322,11 +322,11 @@ var wtSpin = function () {
 
                 if (margin.MarginY !== y) {
                     if (margin.MarginY > y) {
-                        heightWt = heightWt - (countY + 1);
-                        y1 = y1 + (countY + 1);
+                        heightWt = heightWt - countY;
+                        y1 = y1 + countY;
                     } else {
-                        heightWt = heightWt + (countY + 1);
-                        y1 = y1 - (countY + 1);
+                        heightWt = heightWt + countY;
+                        y1 = y1 - countY;
                     }
 
                     margin.MarginY = y;
