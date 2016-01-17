@@ -6,5 +6,6 @@
   "position": "Position",
   "transparency": "Opacity",
   "reset": "Reset",
-  "download": "Download"
+  "download": "Download",
+  "center": "Align"
 }
