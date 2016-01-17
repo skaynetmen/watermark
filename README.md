@@ -1,6 +1,7 @@
 # Watermark
 Graduation project Loftschool.com.
 ## Add custom watermark to photos, it`s easy.
+![Project] (http://wt.alskr.ru/project.png)
 
 ### How to use
 - Upload source image
@@ -17,6 +18,8 @@ Graduation project Loftschool.com.
 - ruby - a dynamic, open source programming language with a focus on simplicity and productivity
 - sass - is the most mature, stable, and powerful professional grade CSS extension language in the world
 - compass - is an open-source CSS Authoring Framework
+- php >=5.4 with Imagick - Hypertext Preprocessor
+- composer - dependency Manager for PHP
 
 ### Installation
 
@@ -37,6 +40,7 @@ Copy dist on your web-server, then:
 
 ```sh
 $ composer install
+$ mkdir -p app/uploads/results
 ```
 
 #### Development
