@@ -20,6 +20,13 @@
   }
 }
 
+.sidebar__item_active {
+  .sidebar__link {
+    background-color: lighten(#d6d4d7, 10%);
+    color: #50555c;
+  }
+}
+
 .sidebar__link {
   position: relative;
   display: block;
