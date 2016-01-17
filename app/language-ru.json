@@ -1,0 +1,11 @@
+{
+  "title": "Генератор водяных знаков",
+  "settings": "Настройки",
+  "sourceImage": "Исходное изображение",
+  "sourceWatermark": "Водяной знак",
+  "position": "Положение",
+  "transparency": "Прозрачность",
+  "reset": "Сброс",
+  "download": "Скачать",
+  "centered": "Центрировать"
+}

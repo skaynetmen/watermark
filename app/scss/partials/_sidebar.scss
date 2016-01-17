@@ -1,0 +1,118 @@
+.sidebar {
+  position: fixed;
+  top: 102px;
+  left: 0;
+}
+
+.sidebar__list {
+  list-style: none;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+.sidebar__item {
+  display: block;
+
+  &:last-child {
+    .sidebar__link {
+      border-bottom-width: 0;
+    }
+  }
+}
+
+.sidebar__item_active {
+  .sidebar__link {
+    background-color: lighten(#d6d4d7, 10%);
+    color: #50555c;
+  }
+}
+
+.sidebar__link {
+  position: relative;
+  display: block;
+  width: 43px;
+  padding: 10px 2px;
+  background-color: #d6d4d7;
+  font-size: em(20);
+  line-height: 22px;
+  text-decoration: none;
+  color: #8e9298;
+  text-align: center;
+  border-bottom: 1px solid #a5a7ac;
+  transition: background-color .3s ease;
+
+  &:hover {
+    background-color: lighten(#d6d4d7, 10%);
+    color: #50555c;
+  }
+}
+
+.socials {
+  position: absolute;
+  left: -43px;
+  @extend %clearfix;
+  width: 86px;
+  transition: left .3s ease;
+
+  &:hover {
+    left: 0;
+  }
+}
+
+.sidebar__link_like {
+  float: right;
+  width: 50%;
+  border-bottom-width: 0;
+
+  text-indent: -9999px;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    @extend %absolute-center;
+    @include get-sprite($icons-sprite, 'like');
+  }
+
+  &:hover:before {
+    @include get-sprite($icons-sprite, 'like');
+  }
+}
+
+.socials__list {
+  float: left;
+  width: 50%;
+
+  .ya-share2__list_direction_horizontal > .ya-share2__item {
+    @extend .sidebar__item;
+  }
+
+  .ya-share2__link {
+    @extend .sidebar__link;
+
+    padding: 21px 2px;
+  }
+
+  .ya-share2__badge,
+  .ya-share2__title {
+    display: none;
+  }
+}
+
+@each $item in vkontakte, twitter, facebook {
+  .ya-share2__item_service_#{$item} {
+    .ya-share2__link {
+      text-indent: -9999px;
+      overflow: hidden;
+
+      &:before {
+        content: '';
+        @extend %absolute-center;
+        @include get-sprite($icons-sprite, '#{$item}');
+      }
+
+      &:hover:before {
+        @include get-sprite($icons-sprite, '#{$item}-hover');
+      }
+    }
+  }
+}

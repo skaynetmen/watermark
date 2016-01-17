@@ -1,0 +1,37 @@
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.alert_danger {
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  color: #a94442;
+}
+
+.alert_success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+.alert__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: 0;
+  font-size: 1.5em;
+  line-height: 1.6em;
+  opacity: 0.7;
+  outline: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}

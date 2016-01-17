@@ -1,8 +1,95 @@
 extends common/layout
 
 block title
-    title Генератор водяных знаков
+    title(data-localize='title') Генератор водяных знаков
 
 
-//block content
-//    h1 Генератор водяных знаков
+block content
+    .generator
+        .desktop
+            h1(data-localize='title').desktop__title Генератор водяных знаков
+
+            .desktop__area
+                #workspace.workspace
+                    img(data-src='uploads/img.jpg' alt='').workspace__img
+                    #workspaceWt.workspace__watermark
+                        img(data-src='uploads/watermark.png' alt='').workspace__watermark-img
+
+                div(style='display:none;')#preloader.preloader
+                    img(src='img/preloader.gif', alt='Loading...').preloader__img
+
+        aside.settings
+            h2(data-localize='settings').settings__title Настройки
+
+            .settings__section
+                form.form
+                    .form__section
+                        label(for='uploadImg', data-localize='sourceImage').form__label Исходное изображение
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadImg').hidden
+
+                            .form__upload-group
+                                input(type='text', placeholder='image.jpg', readonly).form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
+
+                form.form
+                    .form__section
+                        label(for='uploadWatermark', data-localize='sourceWatermark').form__label Водяной знак
+                        .form__upload
+                            input(type='file' name='files[]' id='uploadWatermark').hidden
+
+                            .form__upload-group
+                                input(type='text', placeholder='image.png', readonly).form__input
+                                .form__upload-group-btn
+                                    button(type='button').form__btn
+                                        i.icon-cloud
+
+            .settings__section
+                span(data-localize='position').settings__label Положение
+
+                .mode
+                    ul.mode__list
+                        li.mode__item
+                            a(href='#').mode__link.mode__link_tile Tile
+                        li.mode__item.mode__item_active
+                            a(href='#').mode__link.mode__link_single Single
+
+                .settings__wrapper
+                    - var i = 1
+                    .grid
+                        .grid__wrapper
+                            ul.grid__list
+                                while i <= 9
+                                    li.grid__item
+                                        a(href='#' data-value='#{i}').grid__link= i++
+                            div(style='display:none;').grid__padding
+                                div(style='height: 10px').grid__padding-x
+                                div(style='width: 10px').grid__padding-y
+
+                    .spinners
+                        .spinners__x
+                            label.spinners__label X
+                            input(type='text' id='spinner-1' value='0').spinners__input
+
+                        .spinners__y
+                            label.spinners__label Y
+                            input(type='text' id='spinner-2' value='0').spinners__input
+
+                label.grid-checkbox
+                    input(type='checkbox')#checkCenter.grid-checkbox__input
+                    span(data-localize='centered').grid-checkbox__label Центрировать
+
+            .settings__section
+                span(data-localize='transparency').settings__label Прозрачность
+
+                #slider.slider
+
+            .settings__footer
+                .settings__footer-left
+                    button(type='button', data-localize='reset')#reset.settings__btn Сброс
+                .settings__footer-right
+                    button(type='button', data-localize='download')#submit.settings__btn.settings__btn_red Скачать
+
+            #disabler.disable-settings.disable-watermark
